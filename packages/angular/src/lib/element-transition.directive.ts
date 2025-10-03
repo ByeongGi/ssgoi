@@ -17,27 +17,24 @@ export type ElementTransitionConfig = Transition & { key?: TransitionKey };
 export class ElementTransitionDirective implements OnInit, OnDestroy {
   transition = input.required<ElementTransitionConfig>();
 
+  private readonly el = inject(ElementRef<HTMLElement>);
   private cleanup?: () => void;
-  private el = inject(ElementRef<HTMLElement>);
 
-  ngOnInit() {
+  ngOnInit(): void {
     const config = this.transition();
+    const cleanupResult = coreTransition({
+      key: config.key,
+      in: config.in,
+      out: config.out,
+      ref: this.el.nativeElement,
+    })(this.el.nativeElement);
 
-    // Use setTimeout to ensure the element is fully mounted
-    setTimeout(() => {
-      const cleanupResult = coreTransition({
-        key: config.key,
-        in: config.in,
-        out: config.out,
-        ref: this.el.nativeElement,
-      })(this.el.nativeElement);
-      if (cleanupResult) {
-        this.cleanup = cleanupResult;
-      }
-    }, 0);
+    if (cleanupResult) {
+      this.cleanup = cleanupResult;
+    }
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.cleanup?.();
   }
 }

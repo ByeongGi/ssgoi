@@ -5,8 +5,12 @@ import {
   forwardRef,
 } from "@angular/core";
 import { createSggoiTransitionContext } from "@ssgoi/core";
-import type { SsgoiConfig } from "@ssgoi/core";
+import type { SsgoiConfig, SsgoiContext } from "@ssgoi/core";
 import { SSGOI_CONTEXT } from "./context";
+
+function createSsgoiContext(component: Ssgoi): SsgoiContext {
+  return createSggoiTransitionContext(component.config());
+}
 
 @Component({
   selector: "ssgoi",
@@ -16,12 +20,11 @@ import { SSGOI_CONTEXT } from "./context";
   providers: [
     {
       provide: SSGOI_CONTEXT,
-      useFactory: (component: Ssgoi) =>
-        createSggoiTransitionContext(component.config()),
+      useFactory: createSsgoiContext,
       deps: [forwardRef(() => Ssgoi)],
     },
   ],
 })
 export class Ssgoi {
-  config = input.required<SsgoiConfig>();
+  readonly config = input.required<SsgoiConfig>();
 }

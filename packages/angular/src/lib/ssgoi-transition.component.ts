@@ -5,6 +5,7 @@ import { SsgoiTransitionDirective } from "./transition.directive";
   selector: "ssgoi-transition",
   imports: [SsgoiTransitionDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
   template: `
     <div
       [ssgoiTransition]="id()"
@@ -16,6 +17,6 @@ import { SsgoiTransitionDirective } from "./transition.directive";
   `,
 })
 export class SsgoiTransition {
-  id = input.required<string>();
-  className = input<string>();
+  readonly id = input.required<string>();
+  readonly className = input<string>();
 }
