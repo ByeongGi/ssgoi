@@ -4,13 +4,7 @@
   "description": "Angular bindings for SSGOI - Native app-like page transitions for Angular applications",
   "private": false,
   "type": "module",
-  "main": "./fesm2022/ssgoi-angular.mjs",
-  "module": "./fesm2022/ssgoi-angular.mjs",
-  "es2020": "./fesm2020/ssgoi-angular.mjs",
-  "esm2022": "./esm2022/ssgoi-angular.mjs",
-  "fesm2022": "./fesm2022/ssgoi-angular.mjs",
-  "fesm2020": "./fesm2020/ssgoi-angular.mjs",
-  "typings": "./index.d.ts",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "build": "ng-packagr -p ng-package.json",
     "watch": "ng-packagr -p ng-package.json --watch",
@@ -55,5 +49,27 @@
   },
   "engines": {
     "node": ">=18.0.0"
-  }
+  },
+  "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/fesm2022/ssgoi-angular.mjs"
+    },
+    "./presets": {
+      "types": "./dist/presets/index.d.ts",
+      "default": "./dist/fesm2022/ssgoi-angular-presets.mjs"
+    },
+    "./transitions": {
+      "types": "./dist/transitions/index.d.ts",
+      "default": "./dist/fesm2022/ssgoi-angular-transitions.mjs"
+    },
+    "./view-transitions": {
+      "types": "./dist/view-transitions/index.d.ts",
+      "default": "./dist/fesm2022/ssgoi-angular-view-transitions.mjs"
+    }
+  },
+  "sideEffects": false
 }
