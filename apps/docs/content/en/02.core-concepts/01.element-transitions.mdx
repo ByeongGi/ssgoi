@@ -6,9 +6,10 @@ nav-title: "Element Animations"
 
 ## Transition Examples
 
+
 How to use various transition effects:
 
-<Tabs items={[{ label: "React", value: "react" }, { label: "Svelte", value: "svelte" }, { label: "Vue", value: "vue" }]}>
+<Tabs items={[{ label: "React", value: "react" }, { label: "Svelte", value: "svelte" }, { label: "Vue", value: "vue" }, { label: "Angular", value: "angular" }]}>
   <TabPanel value="react">
     ```jsx
     import { transition } from '@ssgoi/react';
@@ -201,6 +202,65 @@ How to use various transition effects:
     </script>
     ```
   </TabPanel>
+  <TabPanel value="angular">
+    ```typescript
+    import { Component } from '@angular/core';
+    import { SsgoiTransitionDirective } from '@ssgoi/angular';
+    import { fade, scale, blur, slide, fly, rotate, bounce } from '@ssgoi/angular/transitions';
+    import type { TransitionParams } from '@ssgoi/core';
+
+    @Component({
+      selector: 'app-element-transitions',
+      standalone: true,
+      imports: [SsgoiTransitionDirective],
+      template: `
+        <!-- Fade transition -->
+        <div [ssgoiTransition]="fadeTransition">
+          Fade effect
+        </div>
+
+        <!-- Scale transition -->
+        <div [ssgoiTransition]="scaleTransition">
+          Scale effect
+        </div>
+
+        <!-- Blur transition -->
+        <div [ssgoiTransition]="blurTransition">
+          Blur effect
+        </div>
+
+        <!-- Slide transition (with direction) -->
+        <div [ssgoiTransition]="slideTransition">
+          Slide effect
+        </div>
+
+        <!-- Fly transition (custom position) -->
+        <div [ssgoiTransition]="flyTransition">
+          Fly effect
+        </div>
+
+        <!-- Rotate transition -->
+        <div [ssgoiTransition]="rotateTransition">
+          Rotate effect
+        </div>
+
+        <!-- Bounce transition -->
+        <div [ssgoiTransition]="bounceTransition">
+          Bounce effect
+        </div>
+      `
+    })
+    export class ElementTransitionsComponent {
+      fadeTransition: TransitionParams = { key: 'fade-element', ...fade({ spring: { stiffness: 300, damping: 30 } }) };
+      scaleTransition: TransitionParams = { key: 'scale-element', ...scale({ spring: { stiffness: 300, damping: 30 } }) };
+      blurTransition: TransitionParams = { key: 'blur-element', ...blur({ amount: 10, spring: { stiffness: 300, damping: 30 } }) };
+      slideTransition: TransitionParams = { key: 'slide-element', ...slide({ direction: 'left', spring: { stiffness: 300, damping: 30 } }) };
+      flyTransition: TransitionParams = { key: 'fly-element', ...fly({ x: 200, y: -50, spring: { stiffness: 300, damping: 30 } }) };
+      rotateTransition: TransitionParams = { key: 'rotate-element', ...rotate({ spring: { stiffness: 300, damping: 30 } }) };
+      bounceTransition: TransitionParams = { key: 'bounce-element', ...bounce({ spring: { stiffness: 300, damping: 30 } }) };
+    }
+    ```
+  </TabPanel>
 </Tabs>
 
 ## Basic Structure
@@ -246,7 +306,7 @@ import { fade, scale /** etc */ } from "@ssgoi/react/transitions";
 
 ## Framework-specific Usage
 
-<Tabs items={[{ label: "React", value: "react" }, { label: "Svelte", value: "svelte" }, { label: "Vue", value: "vue" }]}>
+<Tabs items={[{ label: "React", value: "react" }, { label: "Svelte", value: "svelte" }, { label: "Vue", value: "vue" }, { label: "Angular", value: "angular" }]}>
   <TabPanel value="react">
     ```jsx
     import { transition } from "@ssgoi/react";
@@ -321,6 +381,40 @@ import { fade, scale /** etc */ } from "@ssgoi/react/transitions";
     <script setup>
     import { transition } from '@ssgoi/vue';
     </script>
+    ```
+  </TabPanel>
+  <TabPanel value="angular">
+    ```typescript
+    import { Component } from '@angular/core';
+    import { SsgoiTransitionDirective } from '@ssgoi/angular';
+    import type { TransitionParams } from '@ssgoi/core';
+
+    @Component({
+      selector: 'app-custom',
+      standalone: true,
+      imports: [SsgoiTransitionDirective],
+      template: `
+        <div [ssgoiTransition]="transitionConfig">
+          Content
+        </div>
+      `,
+    })
+    export class CustomComponent {
+      transitionConfig: TransitionParams = {
+        key: 'unique-key',
+        in: (element) => ({
+          tick: (progress) => {
+            element.style.opacity = `${progress}`;
+            element.style.transform = `translateY(${20 * (1 - progress)}px)`;
+          },
+        }),
+        out: (element) => ({
+          tick: (progress) => {
+            element.style.opacity = `${progress}`;
+          },
+        }),
+      };
+    }
     ```
   </TabPanel>
 </Tabs>
