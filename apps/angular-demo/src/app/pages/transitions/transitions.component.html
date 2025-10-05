@@ -29,11 +29,11 @@
       <!-- Menu Items -->
       <nav class="space-y-2">
         @for (demo of transitionDemos; track demo.name) {
-          <button
+          <a
             [routerLink]="['/transitions', demo.id]"
             [class.border-orange-500]="selectedDemo === demo.id"
             [class.bg-gray-900]="selectedDemo === demo.id"
-            class="group w-full text-left bg-gray-900/50 border border-gray-800 rounded-lg p-4 hover:border-orange-500/50 transition-all hover:bg-gray-900"
+            class="flex flex-col group w-full text-left bg-gray-900/50 border border-gray-800 rounded-lg p-4 hover:border-orange-500/50 transition-all hover:bg-gray-900"
           >
             <div class="flex items-center justify-between mb-2">
               <h3
@@ -58,7 +58,7 @@
               </svg>
             </div>
             <p class="text-gray-400 text-xs mb-2">{{ demo.description }}</p>
-          </button>
+          </a>
         }
       </nav>
     </aside>
