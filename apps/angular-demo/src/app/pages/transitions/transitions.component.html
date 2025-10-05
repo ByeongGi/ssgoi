@@ -1,0 +1,75 @@
+<ssgoi-transition id="/transitions">
+  <div class="flex min-h-screen bg-gray-950 text-gray-100">
+    <!-- Left Menu -->
+    <aside class="w-80 border-r border-gray-800 p-8 overflow-y-auto">
+      <div class="mb-8">
+        <a
+          routerLink="/"
+          class="inline-flex items-center text-gray-400 hover:text-orange-500 transition-colors mb-6"
+        >
+          <svg
+            class="w-5 h-5 mr-2"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"
+            />
+          </svg>
+          Back to Home
+        </a>
+        <h1 class="text-3xl font-bold text-white mb-2">Element Transitions</h1>
+        <p class="text-sm text-gray-400">Component-level transitions</p>
+      </div>
+
+      <!-- Menu Items -->
+      <nav class="space-y-2">
+        @for (demo of transitionDemos; track demo.name) {
+          <button
+            [routerLink]="['/transitions', demo.id]"
+            [class.border-orange-500]="selectedDemo === demo.id"
+            [class.bg-gray-900]="selectedDemo === demo.id"
+            class="group w-full text-left bg-gray-900/50 border border-gray-800 rounded-lg p-4 hover:border-orange-500/50 transition-all hover:bg-gray-900"
+          >
+            <div class="flex items-center justify-between mb-2">
+              <h3
+                class="text-lg font-semibold text-white group-hover:text-orange-500 transition-colors"
+                [class.text-orange-500]="selectedDemo === demo.id"
+              >
+                {{ demo.name }}
+              </h3>
+              <svg
+                class="w-4 h-4 text-gray-600 group-hover:text-orange-500 transition-colors"
+                [class.text-orange-500]="selectedDemo === demo.id"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </div>
+            <p class="text-gray-400 text-xs mb-2">{{ demo.description }}</p>
+          </button>
+        }
+      </nav>
+    </aside>
+
+    <!-- Right Demo Area -->
+    <main class="flex-1 p-8 overflow-y-auto">
+      <div class="max-w-4xl mx-auto">
+        <div class="space-y-6">
+          <router-outlet />
+        </div>
+      </div>
+    </main>
+  </div>
+</ssgoi-transition>

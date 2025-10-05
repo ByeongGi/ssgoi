@@ -2,11 +2,32 @@
   <div class="app-container">
     <div class="hero-section">
       <h1 class="app-title">SSGOI Angular Demo</h1>
+      <p class="app-subtitle">
+        Native app-like transitions for Angular applications
+      </p>
+    </div>
+
+    <!-- Navigation Menu -->
+    <div class="navigation-menu">
+      <a routerLink="/view-transitions" class="menu-card">
+        <div class="menu-icon">🎬</div>
+        <h3 class="menu-title">View Transitions</h3>
+        <p class="menu-description">
+          Page-level transitions for navigation between routes
+        </p>
+      </a>
+      <a routerLink="/transitions" class="menu-card">
+        <div class="menu-icon">✨</div>
+        <h3 class="menu-title">Element Transitions</h3>
+        <p class="menu-description">
+          Component-level transitions for mounting/unmounting elements
+        </p>
+      </a>
     </div>
 
     <!-- Hero Transition Section -->
     <div class="hero-transition-section">
-      <h2 class="section-title">Hero Transition</h2>
+      <h2 class="section-title">Hero Transition Example</h2>
       <div class="color-grid">
         @for (item of colors; track item.id) {
           <a
