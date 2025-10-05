@@ -6,7 +6,6 @@ import {
   OnDestroy,
   inject,
   PLATFORM_ID,
-  afterNextRender,
 } from "@angular/core";
 import { isPlatformBrowser } from "@angular/common";
 import { transition as coreTransition } from "@ssgoi/core";
@@ -29,19 +28,17 @@ export class ElementTransitionDirective implements OnInit, OnDestroy {
       return;
     }
 
-    afterNextRender(() => {
-      const config = this.transition();
-      const cleanupResult = coreTransition({
-        key: config.key,
-        in: config.in,
-        out: config.out,
-        ref: this.el.nativeElement,
-      })(this.el.nativeElement);
+    const config = this.transition();
+    const cleanupResult = coreTransition({
+      key: config.key,
+      in: config.in,
+      out: config.out,
+      ref: this.el.nativeElement,
+    })(this.el.nativeElement);
 
-      if (cleanupResult) {
-        this.cleanup = cleanupResult;
-      }
-    });
+    if (cleanupResult) {
+      this.cleanup = cleanupResult;
+    }
   }
 
   ngOnDestroy(): void {

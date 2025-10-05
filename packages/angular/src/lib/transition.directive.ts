@@ -6,7 +6,6 @@ import {
   OnDestroy,
   inject,
   PLATFORM_ID,
-  afterNextRender,
 } from "@angular/core";
 import { isPlatformBrowser } from "@angular/common";
 import { transition } from "@ssgoi/core";
@@ -28,15 +27,12 @@ export class SsgoiTransitionDirective implements OnInit, OnDestroy {
     if (!isPlatformBrowser(this.platformId)) {
       return;
     }
+    const transitionConfig = this.getTransition(this.ssgoiTransition());
+    const cleanupResult = transition(transitionConfig)(this.el.nativeElement);
 
-    afterNextRender(() => {
-      const transitionConfig = this.getTransition(this.ssgoiTransition());
-      const cleanupResult = transition(transitionConfig)(this.el.nativeElement);
-
-      if (cleanupResult) {
-        this.cleanup = cleanupResult;
-      }
-    });
+    if (cleanupResult) {
+      this.cleanup = cleanupResult;
+    }
   }
 
   ngOnDestroy(): void {
