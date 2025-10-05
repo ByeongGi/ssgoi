@@ -5,7 +5,10 @@ import {
   OnInit,
   OnDestroy,
   inject,
+  PLATFORM_ID,
+  afterNextRender,
 } from "@angular/core";
+import { isPlatformBrowser } from "@angular/common";
 import { transition as coreTransition } from "@ssgoi/core";
 import type { Transition, TransitionKey } from "@ssgoi/core";
 
@@ -18,20 +21,27 @@ export class ElementTransitionDirective implements OnInit, OnDestroy {
   transition = input.required<ElementTransitionConfig>();
 
   private readonly el = inject(ElementRef<HTMLElement>);
+  private readonly platformId = inject(PLATFORM_ID);
   private cleanup?: () => void;
 
   ngOnInit(): void {
-    const config = this.transition();
-    const cleanupResult = coreTransition({
-      key: config.key,
-      in: config.in,
-      out: config.out,
-      ref: this.el.nativeElement,
-    })(this.el.nativeElement);
-
-    if (cleanupResult) {
-      this.cleanup = cleanupResult;
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
     }
+
+    afterNextRender(() => {
+      const config = this.transition();
+      const cleanupResult = coreTransition({
+        key: config.key,
+        in: config.in,
+        out: config.out,
+        ref: this.el.nativeElement,
+      })(this.el.nativeElement);
+
+      if (cleanupResult) {
+        this.cleanup = cleanupResult;
+      }
+    });
   }
 
   ngOnDestroy(): void {
