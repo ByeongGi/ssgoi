@@ -8,17 +8,22 @@ import {
   PLATFORM_ID,
 } from "@angular/core";
 import { isPlatformBrowser } from "@angular/common";
-import { transition } from "@ssgoi/core";
-import { injectSsgoi } from "./context";
+import { transition as coreTransition } from "@ssgoi/core";
+import type {
+  Transition as CoreTransitionConfig,
+  TransitionKey as CoreTransitionKey,
+} from "@ssgoi/core";
+
+export type TransitionDirectiveConfig = CoreTransitionConfig & {
+  key?: CoreTransitionKey;
+};
 
 @Directive({
-  selector: "[ssgoiTransition]",
-  standalone: true,
+  selector: "[transition]",
 })
-export class SsgoiTransitionDirective implements OnInit, OnDestroy {
-  ssgoiTransition = input.required<string>();
+export class TransitionDirective implements OnInit, OnDestroy {
+  transition = input.required<TransitionDirectiveConfig>();
 
-  private readonly getTransition = injectSsgoi();
   private readonly el = inject(ElementRef<HTMLElement>);
   private readonly platformId = inject(PLATFORM_ID);
   private cleanup?: () => void;
@@ -27,8 +32,14 @@ export class SsgoiTransitionDirective implements OnInit, OnDestroy {
     if (!isPlatformBrowser(this.platformId)) {
       return;
     }
-    const transitionConfig = this.getTransition(this.ssgoiTransition());
-    const cleanupResult = transition(transitionConfig)(this.el.nativeElement);
+
+    const config = this.transition();
+    const cleanupResult = coreTransition({
+      key: config.key,
+      in: config.in,
+      out: config.out,
+      ref: this.el.nativeElement,
+    })(this.el.nativeElement);
 
     if (cleanupResult) {
       this.cleanup = cleanupResult;

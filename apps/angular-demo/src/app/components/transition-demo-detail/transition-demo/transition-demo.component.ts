@@ -1,6 +1,6 @@
 import { Component, computed, effect, input, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ElementTransitionDirective } from '@ssgoi/angular';
+import { TransitionDirective } from '@ssgoi/angular';
 import * as transitions from '@ssgoi/angular/transitions';
 import { config as springPresets } from '@ssgoi/angular/presets';
 import type { Transition } from '@ssgoi/angular';
@@ -12,7 +12,7 @@ import {
 
 @Component({
   selector: 'app-transition-demo',
-  imports: [CommonModule, ElementTransitionDirective],
+  imports: [CommonModule, TransitionDirective],
   templateUrl: './transition-demo.component.html',
   styleUrls: ['./transition-demo.component.css'],
 })

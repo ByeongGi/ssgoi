@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SsgoiTransition, ElementTransitionDirective } from '@ssgoi/angular';
+import { SsgoiTransition, TransitionDirective } from '@ssgoi/angular';
 
 interface ColorItem {
   id: number;
@@ -10,7 +10,7 @@ interface ColorItem {
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, SsgoiTransition, ElementTransitionDirective],
+  imports: [RouterLink, SsgoiTransition, TransitionDirective],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })

@@ -1,5 +1,5 @@
 import { Component, input, ChangeDetectionStrategy } from "@angular/core";
-import { SsgoiTransitionDirective } from "./transition.directive";
+import { SsgoiTransitionDirective } from "./ssgoi-transition.directive";
 
 @Component({
   selector: "ssgoi-transition",
