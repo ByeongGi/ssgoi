@@ -152,7 +152,11 @@
         <div class="shape-container">
           <div class="shape-wrapper">
             @if (showShapes()) {
-              <div [transition]="fade" class="shape circle"></div>
+              <div
+                id="my-element"
+                [transition]="fade"
+                class="shape circle"
+              ></div>
             }
           </div>
           <p class="shape-label">Fade(Slow)</p>

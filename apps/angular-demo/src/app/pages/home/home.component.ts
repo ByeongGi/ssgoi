@@ -47,11 +47,12 @@ export class HomeComponent {
     },
   });
 
-  fade = fade({
-    from: 0.1,
-    to: 1,
-    spring: slow,
-  });
+  fade = {
+    key: 'my-element',
+    ...fade({
+      spring: slow,
+    }),
+  };
 
   // Transition for scale + rotate
   scaleRotateTransition = (element: HTMLElement) => ({
