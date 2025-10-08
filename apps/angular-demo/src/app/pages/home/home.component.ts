@@ -1,6 +1,8 @@
 import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SsgoiTransition, TransitionDirective } from '@ssgoi/angular';
+import { fade } from '@ssgoi/angular/transitions';
+import { slow } from '@ssgoi/angular/presets';
 
 interface ColorItem {
   id: number;
@@ -43,6 +45,12 @@ export class HomeComponent {
     tick: (progress: number) => {
       element.style.opacity = progress.toString();
     },
+  });
+
+  fade = fade({
+    from: 0.1,
+    to: 1,
+    spring: slow,
   });
 
   // Transition for scale + rotate

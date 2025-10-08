@@ -148,6 +148,16 @@
           <p class="shape-label">Fade</p>
         </div>
 
+        <!-- Slow Fade -->
+        <div class="shape-container">
+          <div class="shape-wrapper">
+            @if (showShapes()) {
+              <div [transition]="fade" class="shape circle"></div>
+            }
+          </div>
+          <p class="shape-label">Fade(Slow)</p>
+        </div>
+
         <!-- Scale + Rotate -->
         <div class="shape-container">
           <div class="shape-wrapper">
