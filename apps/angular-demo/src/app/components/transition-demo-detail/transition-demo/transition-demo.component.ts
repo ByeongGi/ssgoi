@@ -1,4 +1,11 @@
-import { Component, computed, effect, input, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  input,
+  signal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TransitionDirective } from '@ssgoi/angular';
 import * as transitions from '@ssgoi/angular/transitions';
@@ -15,6 +22,7 @@ import {
   imports: [CommonModule, TransitionDirective],
   templateUrl: './transition-demo.component.html',
   styleUrls: ['./transition-demo.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TransitionDemoComponent {
   type = input.required<TransitionType>();

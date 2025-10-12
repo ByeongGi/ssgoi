@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SsgoiTransition } from '@ssgoi/angular';
 
 @Component({
   selector: 'app-view-transitions',
   imports: [RouterLink, SsgoiTransition],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <ssgoi-transition id="/view-transitions">
       <div class="min-h-screen bg-gray-950 text-gray-100 p-8">

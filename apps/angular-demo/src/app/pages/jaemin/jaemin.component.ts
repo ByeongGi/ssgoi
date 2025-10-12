@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SsgoiTransition } from '@ssgoi/angular';
 
@@ -7,6 +7,7 @@ import { SsgoiTransition } from '@ssgoi/angular';
   imports: [RouterLink, SsgoiTransition],
   templateUrl: './jaemin.component.html',
   styleUrl: './jaemin.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class JaeminComponent {
   features = [

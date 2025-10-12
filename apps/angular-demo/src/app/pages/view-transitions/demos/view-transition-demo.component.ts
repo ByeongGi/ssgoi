@@ -1,5 +1,11 @@
-import { Component, OnInit, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  signal,
+} from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { SsgoiTransition } from '@ssgoi/angular';
 import { CommonModule } from '@angular/common';
 
@@ -180,6 +186,7 @@ const config = {
 @Component({
   selector: 'app-view-transition-demo',
   imports: [RouterLink, SsgoiTransition, CommonModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <ssgoi-transition [id]="'/view-transitions/' + demoId()">
       <div class="min-h-screen bg-gray-950 text-gray-100 p-8">
@@ -300,20 +307,22 @@ const config = {
     `,
   ],
 })
-export class ViewTransitionDemoComponent implements OnInit {
-  demoId = signal<string>('');
-  demoInfo = signal<DemoInfo | null>(null);
+export class ViewTransitionDemoComponent {
+  private params = toSignal(this.route.params);
+
+  demoId = computed(() => {
+    const params = this.params();
+    return params?.['id'] || '';
+  });
+
+  demoInfo = computed(() => {
+    const id = this.demoId();
+    return demoInfoMap[id] || null;
+  });
+
   copied = signal(false);
 
   constructor(private route: ActivatedRoute) {}
-
-  ngOnInit() {
-    this.route.params.subscribe((params) => {
-      const id = params['id'];
-      this.demoId.set(id);
-      this.demoInfo.set(demoInfoMap[id] || null);
-    });
-  }
 
   copyCode() {
     const code = this.demoInfo()?.code;

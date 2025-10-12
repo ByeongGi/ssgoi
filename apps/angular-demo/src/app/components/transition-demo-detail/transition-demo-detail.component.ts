@@ -1,5 +1,11 @@
-import { Component, OnInit, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  signal,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { SsgoiTransition } from '@ssgoi/angular';
 import { CommonModule } from '@angular/common';
 import { TransitionDemoComponent } from './transition-demo/transition-demo.component';
@@ -14,22 +20,25 @@ import {
   imports: [SsgoiTransition, CommonModule, TransitionDemoComponent],
   templateUrl: './transition-demo-detail.component.html',
   styleUrls: ['./transition-demo-detail.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TransitionDemoDetailComponent implements OnInit {
-  demoId = signal<TransitionType>('fade');
-  demoInfo = signal<DemoInfo | null>(null);
+export class TransitionDemoDetailComponent {
+  private params = toSignal(this.route.params);
+
+  demoId = computed(() => {
+    const params = this.params();
+    return (params?.['id'] as TransitionType) || 'fade';
+  });
+
+  demoInfo = computed(() => {
+    const id = this.demoId();
+    return demoInfoMap[id] || null;
+  });
+
   copiedTypeScript = signal(false);
   copiedHtml = signal(false);
 
   constructor(private route: ActivatedRoute) {}
-
-  ngOnInit() {
-    this.route.params.subscribe((params) => {
-      const id = params['id'] as TransitionType;
-      this.demoId.set(id);
-      this.demoInfo.set(demoInfoMap[id] || null);
-    });
-  }
 
   copyTypeScript() {
     const code = this.demoInfo()?.typescript;

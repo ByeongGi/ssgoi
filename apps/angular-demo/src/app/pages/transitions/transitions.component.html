@@ -31,20 +31,20 @@
         @for (demo of transitionDemos; track demo.name) {
           <a
             [routerLink]="['/transitions', demo.id]"
-            [class.border-orange-500]="selectedDemo === demo.id"
-            [class.bg-gray-900]="selectedDemo === demo.id"
+            [class.border-orange-500]="selectedDemo() === demo.id"
+            [class.bg-gray-900]="selectedDemo() === demo.id"
             class="flex flex-col group w-full text-left bg-gray-900/50 border border-gray-800 rounded-lg p-4 hover:border-orange-500/50 transition-all hover:bg-gray-900"
           >
             <div class="flex items-center justify-between mb-2">
               <h3
                 class="text-lg font-semibold text-white group-hover:text-orange-500 transition-colors"
-                [class.text-orange-500]="selectedDemo === demo.id"
+                [class.text-orange-500]="selectedDemo() === demo.id"
               >
                 {{ demo.name }}
               </h3>
               <svg
                 class="w-4 h-4 text-gray-600 group-hover:text-orange-500 transition-colors"
-                [class.text-orange-500]="selectedDemo === demo.id"
+                [class.text-orange-500]="selectedDemo() === demo.id"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"

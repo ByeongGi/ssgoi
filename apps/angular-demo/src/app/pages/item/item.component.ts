@@ -1,5 +1,11 @@
-import { Component, computed, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+} from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { SsgoiTransition } from '@ssgoi/angular';
 
 interface ColorItem {
@@ -13,9 +19,11 @@ interface ColorItem {
   imports: [RouterLink, SsgoiTransition],
   templateUrl: './item.component.html',
   styleUrl: './item.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ItemComponent {
   private route = inject(ActivatedRoute);
+  private params = toSignal(this.route.params);
 
   colors: ColorItem[] = [
     { id: 1, color: '#FF6B6B', name: 'Coral' },
@@ -27,8 +35,8 @@ export class ItemComponent {
   ];
 
   id = computed(() => {
-    const params = this.route.snapshot.paramMap;
-    return Number(params.get('id'));
+    const params = this.params();
+    return Number(params?.['id']);
   });
 
   item = computed(() => {

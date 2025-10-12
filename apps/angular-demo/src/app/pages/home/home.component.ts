@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SsgoiTransition, TransitionDirective } from '@ssgoi/angular';
 import { fade } from '@ssgoi/angular/transitions';
@@ -15,6 +15,7 @@ interface ColorItem {
   imports: [RouterLink, SsgoiTransition, TransitionDirective],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent {
   colors: ColorItem[] = [
