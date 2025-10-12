@@ -205,59 +205,58 @@ nav-title: "요소 애니메이션"
   <TabPanel value="angular">
     ```typescript
     import { Component } from '@angular/core';
-    import { SsgoiTransitionDirective } from '@ssgoi/angular';
+    import { TransitionDirective } from '@ssgoi/angular';
     import { fade, scale, blur, slide, fly, rotate, bounce } from '@ssgoi/angular/transitions';
-    import type { TransitionParams } from '@ssgoi/core';
 
     @Component({
       selector: 'app-element-transitions',
       standalone: true,
-      imports: [SsgoiTransitionDirective],
+      imports: [TransitionDirective],
       template: `
         <!-- Fade 트랜지션 -->
-        <div [ssgoiTransition]="fadeTransition">
+        <div [transition]="fadeTransition">
           Fade 효과
         </div>
 
         <!-- Scale 트랜지션 -->
-        <div [ssgoiTransition]="scaleTransition">
+        <div [transition]="scaleTransition">
           Scale 효과
         </div>
 
         <!-- Blur 트랜지션 -->
-        <div [ssgoiTransition]="blurTransition">
+        <div [transition]="blurTransition">
           Blur 효과
         </div>
 
         <!-- Slide 트랜지션 (방향 지정) -->
-        <div [ssgoiTransition]="slideTransition">
+        <div [transition]="slideTransition">
           Slide 효과
         </div>
 
         <!-- Fly 트랜지션 (커스텀 위치) -->
-        <div [ssgoiTransition]="flyTransition">
+        <div [transition]="flyTransition">
           Fly 효과
         </div>
 
         <!-- Rotate 트랜지션 -->
-        <div [ssgoiTransition]="rotateTransition">
+        <div [transition]="rotateTransition">
           Rotate 효과
         </div>
 
         <!-- Bounce 트랜지션 -->
-        <div [ssgoiTransition]="bounceTransition">
+        <div [transition]="bounceTransition">
           Bounce 효과
         </div>
       `
     })
     export class ElementTransitionsComponent {
-      fadeTransition: TransitionParams = { key: 'fade-element', ...fade({ spring: { stiffness: 300, damping: 30 } }) };
-      scaleTransition: TransitionParams = { key: 'scale-element', ...scale({ spring: { stiffness: 300, damping: 30 } }) };
-      blurTransition: TransitionParams = { key: 'blur-element', ...blur({ amount: 10, spring: { stiffness: 300, damping: 30 } }) };
-      slideTransition: TransitionParams = { key: 'slide-element', ...slide({ direction: 'left', spring: { stiffness: 300, damping: 30 } }) };
-      flyTransition: TransitionParams = { key: 'fly-element', ...fly({ x: 200, y: -50, spring: { stiffness: 300, damping: 30 } }) };
-      rotateTransition: TransitionParams = { key: 'rotate-element', ...rotate({ spring: { stiffness: 300, damping: 30 } }) };
-      bounceTransition: TransitionParams = { key: 'bounce-element', ...bounce({ spring: { stiffness: 300, damping: 30 } }) };
+      fadeTransition = { key: 'fade-element', ...fade({ spring: { stiffness: 300, damping: 30 } }) };
+      scaleTransition = { key: 'scale-element', ...scale({ spring: { stiffness: 300, damping: 30 } }) };
+      blurTransition = { key: 'blur-element', ...blur({ amount: 10, spring: { stiffness: 300, damping: 30 } }) };
+      slideTransition = { key: 'slide-element', ...slide({ direction: 'left', spring: { stiffness: 300, damping: 30 } }) };
+      flyTransition = { key: 'fly-element', ...fly({ x: 200, y: -50, spring: { stiffness: 300, damping: 30 } }) };
+      rotateTransition = { key: 'rotate-element', ...rotate({ spring: { stiffness: 300, damping: 30 } }) };
+      bounceTransition = { key: 'bounce-element', ...bounce({ spring: { stiffness: 300, damping: 30 } }) };
     }
     ```
   </TabPanel>
@@ -386,33 +385,32 @@ import { fade, scale /** 등등 */ } from "@ssgoi/react/transitions";
   <TabPanel value="angular">
     ```typescript
     import { Component } from '@angular/core';
-    import { SsgoiTransitionDirective } from '@ssgoi/angular';
-    import type { TransitionParams } from '@ssgoi/core';
+    import { TransitionDirective } from '@ssgoi/angular';
 
     @Component({
       selector: 'app-custom',
       standalone: true,
-      imports: [SsgoiTransitionDirective],
+      imports: [TransitionDirective],
       template: `
-        <div [ssgoiTransition]="transitionConfig">
+        <div [transition]="transitionConfig">
           내용
         </div>
       `,
     })
     export class CustomComponent {
-      transitionConfig: TransitionParams = {
+      transitionConfig = {
         key: 'unique-key',
-        in: (element) => ({
-          tick: (progress) => {
+        in: (element: HTMLElement) => ({
+          tick: (progress: number) => {
             element.style.opacity = `${progress}`;
             element.style.transform = `translateY(${20 * (1 - progress)}px)`;
-          },
+          }
         }),
-        out: (element) => ({
-          tick: (progress) => {
+        out: (element: HTMLElement) => ({
+          tick: (progress: number) => {
             element.style.opacity = `${progress}`;
-          },
-        }),
+          }
+        })
       };
     }
     ```
