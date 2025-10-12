@@ -97,7 +97,7 @@ transition({
 
 ### 뷰 트랜지션에서 프리셋 사용
 
-<Tabs items={[{ label: "React", value: "react" }, { label: "Svelte", value: "svelte" }, { label: "Vue", value: "vue" }]}>
+<Tabs items={[{ label: "React", value: "react" }, { label: "Svelte", value: "svelte" }, { label: "Vue", value: "vue" }, { label: "Angular", value: "angular" }]}>
   <TabPanel value="react">
     ```tsx
     import { Ssgoi } from '@ssgoi/react';
@@ -166,11 +166,43 @@ transition({
     </template>
     ```
   </TabPanel>
+  <TabPanel value="angular">
+    ```typescript
+    import { Component } from '@angular/core';
+    import { Ssgoi } from '@ssgoi/angular';
+    import { config as springPresets } from '@ssgoi/angular/presets';
+    import { fade, slide } from '@ssgoi/angular/view-transitions';
+    import type { SsgoiConfig } from '@ssgoi/core';
+
+    @Component({
+      selector: 'app-root',
+      standalone: true,
+      imports: [Ssgoi],
+      template: `
+        <ssgoi [config]="config">
+          <!-- 앱 콘텐츠 -->
+        </ssgoi>
+      `
+    })
+    export class AppComponent {
+      config: SsgoiConfig = {
+        defaultTransition: fade({ spring: springPresets.gentle }),
+        transitions: [
+          {
+            from: '/home',
+            to: '/about',
+            transition: slide({ spring: springPresets.wobbly })
+          }
+        ]
+      };
+    }
+    ```
+  </TabPanel>
 </Tabs>
 
 ### 요소 트랜지션에서 프리셋 사용
 
-<Tabs items={[{ label: "React", value: "react" }, { label: "Svelte", value: "svelte" }, { label: "Vue", value: "vue" }]}>
+<Tabs items={[{ label: "React", value: "react" }, { label: "Svelte", value: "svelte" }, { label: "Vue", value: "vue" }, { label: "Angular", value: "angular" }]}>
   <TabPanel value="react">
     ```tsx
     import { transition } from '@ssgoi/react';
@@ -225,6 +257,43 @@ transition({
         컨텐츠
       </div>
     </template>
+    ```
+  </TabPanel>
+  <TabPanel value="angular">
+    ```typescript
+    import { Component } from '@angular/core';
+    import { SsgoiTransitionDirective } from '@ssgoi/angular';
+    import { config as springPresets } from '@ssgoi/angular/presets';
+    import type { TransitionParams } from '@ssgoi/core';
+
+    @Component({
+      selector: 'app-my-component',
+      standalone: true,
+      imports: [SsgoiTransitionDirective],
+      template: `
+        <div [ssgoiTransition]="fadeInConfig">
+          컨텐츠
+        </div>
+      `
+    })
+    export class MyComponent {
+      fadeInConfig: TransitionParams = {
+        key: 'fade-in',
+        spring: springPresets.slow,
+        in: (element) => ({
+          tick: (progress) => {
+            element.style.opacity = `${progress}`;
+            element.style.transform = `translateY(${(1 - progress) * 20}px)`;
+          }
+        }),
+        out: (element) => ({
+          tick: (progress) => {
+            element.style.opacity = `${progress}`;
+            element.style.transform = `translateY(${(1 - progress) * 20}px)`;
+          }
+        })
+      };
+    }
     ```
   </TabPanel>
 </Tabs>

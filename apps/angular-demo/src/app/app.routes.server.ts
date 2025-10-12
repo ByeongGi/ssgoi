@@ -14,6 +14,18 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Server,
   },
   {
+    path: 'view-transitions',
+    renderMode: RenderMode.Server,
+  },
+  {
+    path: 'transitions',
+    renderMode: RenderMode.Server,
+  },
+  {
+    path: 'transitions/:id',
+    renderMode: RenderMode.Server,
+  },
+  {
     path: '**',
     renderMode: RenderMode.Prerender,
   },
