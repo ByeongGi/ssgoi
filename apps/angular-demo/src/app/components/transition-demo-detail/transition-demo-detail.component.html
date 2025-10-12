@@ -25,23 +25,53 @@
         <!-- Code Section -->
         <div class="mb-12">
           <h2 class="text-2xl font-semibold text-white mb-4">Basic Usage</h2>
-          <div
-            class="bg-gray-900/50 border border-gray-800 rounded-xl overflow-hidden"
-          >
+
+          <!-- TypeScript Code -->
+          <div class="mb-4">
             <div
-              class="bg-gray-800/50 px-4 py-2 border-b border-gray-700 flex items-center justify-between"
+              class="bg-gray-900/50 border border-gray-800 rounded-xl overflow-hidden"
             >
-              <span class="text-gray-400 text-sm font-mono">TypeScript</span>
-              <button
-                (click)="copyCode()"
-                class="px-3 py-1 bg-gray-700 hover:bg-gray-600 text-gray-300 text-xs rounded-md transition-colors"
+              <div
+                class="bg-gray-800/50 px-4 py-2 border-b border-gray-700 flex items-center justify-between"
               >
-                {{ copied() ? 'Copied!' : 'Copy' }}
-              </button>
+                <span class="text-gray-400 text-sm font-mono"
+                  >example.component.ts</span
+                >
+                <button
+                  (click)="copyTypeScript()"
+                  class="px-3 py-1 bg-gray-700 hover:bg-gray-600 text-gray-300 text-xs rounded-md transition-colors"
+                >
+                  {{ copiedTypeScript() ? 'Copied!' : 'Copy' }}
+                </button>
+              </div>
+              <pre
+                class="p-4 text-sm text-gray-300 overflow-x-auto"
+              ><code>{{ demoInfo()!.typescript }}</code></pre>
             </div>
-            <pre
-              class="p-4 text-sm text-gray-300 overflow-x-auto"
-            ><code>{{ demoInfo()!.code }}</code></pre>
+          </div>
+
+          <!-- HTML Code -->
+          <div>
+            <div
+              class="bg-gray-900/50 border border-gray-800 rounded-xl overflow-hidden"
+            >
+              <div
+                class="bg-gray-800/50 px-4 py-2 border-b border-gray-700 flex items-center justify-between"
+              >
+                <span class="text-gray-400 text-sm font-mono"
+                  >example.component.html</span
+                >
+                <button
+                  (click)="copyHtml()"
+                  class="px-3 py-1 bg-gray-700 hover:bg-gray-600 text-gray-300 text-xs rounded-md transition-colors"
+                >
+                  {{ copiedHtml() ? 'Copied!' : 'Copy' }}
+                </button>
+              </div>
+              <pre
+                class="p-4 text-sm text-gray-300 overflow-x-auto"
+              ><code>{{ demoInfo()!.html }}</code></pre>
+            </div>
           </div>
         </div>
 

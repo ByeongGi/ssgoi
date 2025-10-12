@@ -18,7 +18,8 @@ import {
 export class TransitionDemoDetailComponent implements OnInit {
   demoId = signal<TransitionType>('fade');
   demoInfo = signal<DemoInfo | null>(null);
-  copied = signal(false);
+  copiedTypeScript = signal(false);
+  copiedHtml = signal(false);
 
   constructor(private route: ActivatedRoute) {}
 
@@ -30,12 +31,21 @@ export class TransitionDemoDetailComponent implements OnInit {
     });
   }
 
-  copyCode() {
-    const code = this.demoInfo()?.code;
+  copyTypeScript() {
+    const code = this.demoInfo()?.typescript;
     if (code) {
       navigator.clipboard.writeText(code);
-      this.copied.set(true);
-      setTimeout(() => this.copied.set(false), 2000);
+      this.copiedTypeScript.set(true);
+      setTimeout(() => this.copiedTypeScript.set(false), 2000);
+    }
+  }
+
+  copyHtml() {
+    const code = this.demoInfo()?.html;
+    if (code) {
+      navigator.clipboard.writeText(code);
+      this.copiedHtml.set(true);
+      setTimeout(() => this.copiedHtml.set(false), 2000);
     }
   }
 }
