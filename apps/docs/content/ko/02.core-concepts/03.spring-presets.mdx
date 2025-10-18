@@ -172,7 +172,7 @@ transition({
     ```typescript
     import { Component } from '@angular/core';
     import { Ssgoi } from '@ssgoi/angular';
-    import { config as springPresets } from '@ssgoi/angular/presets';
+    import { config } from '@ssgoi/angular/presets';
     import { fade, slide } from '@ssgoi/angular/view-transitions';
     import type { SsgoiConfig } from '@ssgoi/angular';
 
@@ -188,12 +188,15 @@ transition({
     })
     export class AppComponent {
       config: SsgoiConfig = {
-        defaultTransition: fade({ spring: springPresets.gentle }),
+        defaultTransition: fade({
+         inSpring: config.gentle,
+         outSpring: config.slow,
+        }),
         transitions: [
           {
             from: '/home',
             to: '/about',
-            transition: slide({ spring: springPresets.wobbly })
+            transition: slide({ spring: config.wobbly })
           }
         ]
       };
@@ -264,35 +267,26 @@ transition({
   <TabPanel value="angular">
     ```typescript
     import { Component } from '@angular/core';
-    import { SsgoiTransitionDirective } from '@ssgoi/angular';
-    import { config as springPresets } from '@ssgoi/angular/presets';
-    import type { TransitionParams } from '@ssgoi/angular';
+    import { TransitionDirective } from '@ssgoi/angular';
+    import { config } from '@ssgoi/angular/presets';
+    import type { TransitionDirectiveConfig } from '@ssgoi/angular';
 
     @Component({
-      selector: 'app-my-component',
+      selector: 'app-my',
       standalone: true,
-      imports: [SsgoiTransitionDirective],
+      imports: [TransitionDirective],
       template: `
-        <div [ssgoiTransition]="fadeInConfig">
+        <div [transition]="fadeInConfig">
           컨텐츠
         </div>
       `
     })
     export class MyComponent {
-      fadeInConfig: TransitionParams = {
-        key: 'fade-in',
-        spring: springPresets.slow,
-        in: (element) => ({
-          tick: (progress) => {
-            element.style.opacity = `${progress}`;
-            element.style.transform = `translateY(${(1 - progress) * 20}px)`;
-          }
-        }),
-        out: (element) => ({
-          tick: (progress) => {
-            element.style.opacity = `${progress}`;
-            element.style.transform = `translateY(${(1 - progress) * 20}px)`;
-          }
+      fadeInConfig: TransitionDirectiveConfig = {
+        spring: config.slow,
+        tick: (progress) => ({
+          opacity: progress,
+          transform: `translateY(${(1 - progress) * 20}px)`
         })
       };
     }

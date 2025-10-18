@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 import { TransitionDirective } from '@ssgoi/angular';
 import * as transitions from '@ssgoi/angular/transitions';
 import { config as springPresets } from '@ssgoi/angular/presets';
-import type { Transition } from '@ssgoi/angular';
+import type { TransitionDirectiveConfig } from '@ssgoi/angular';
 import {
   TransitionType,
   SpringPreset,
@@ -49,7 +49,7 @@ export class TransitionDemoComponent {
     });
   }
 
-  transitionConfig = computed((): Transition => {
+  transitionConfig = computed((): TransitionDirectiveConfig => {
     const transitionFn = transitions[this.type()];
     if (!transitionFn) {
       throw new Error(`Unknown transition type: ${this.type()}`);
