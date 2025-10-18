@@ -223,14 +223,14 @@ nav-title: "クイックスタート"
     import { RouterOutlet } from '@angular/router';
     import { Ssgoi } from '@ssgoi/angular';
     import { fade } from '@ssgoi/angular/view-transitions';
-    import type { SsgoiConfig } from '@ssgoi/core';
+    import type { SsgoiConfig } from '@ssgoi/angular';
 
     @Component({
       selector: 'app-root',
       standalone: true,
       imports: [RouterOutlet, Ssgoi],
       template: `
-        <ssgoi [config]="config">
+        <ssgoi [config]="ssgoiConfig">
           <!-- ⚠️ 重要: position: relativeが必要です！ -->
           <div style="position: relative; min-height: 100vh;">
             <router-outlet />
@@ -239,7 +239,7 @@ nav-title: "クイックスタート"
       `,
     })
     export class AppComponent {
-      config: SsgoiConfig = {
+      ssgoiConfig: SsgoiConfig = {
         defaultTransition: fade(),
       };
     }
@@ -391,7 +391,7 @@ nav-title: "クイックスタート"
     import { RouterOutlet } from '@angular/router';
     import { Ssgoi } from '@ssgoi/angular';
     import { scroll, fade, drill } from "@ssgoi/angular/view-transitions";
-    import type { SsgoiConfig } from '@ssgoi/core';
+    import type { SsgoiConfig } from '@ssgoi/angular';
 
     @Component({
       selector: 'app-root',

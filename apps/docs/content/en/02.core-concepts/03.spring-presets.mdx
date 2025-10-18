@@ -15,6 +15,8 @@ You can import spring presets from the `presets` module:
 import { config } from '@ssgoi/react/presets';
 // or
 import { config } from '@ssgoi/svelte/presets';
+// or
+import { config } from '@ssgoi/angular/presets';
 
 // Use in transitions
 transition({
@@ -172,7 +174,7 @@ transition({
     import { Ssgoi } from '@ssgoi/angular';
     import { config as springPresets } from '@ssgoi/angular/presets';
     import { fade, slide } from '@ssgoi/angular/view-transitions';
-    import type { SsgoiConfig } from '@ssgoi/core';
+    import type { SsgoiConfig } from '@ssgoi/angular';
 
     @Component({
       selector: 'app-root',
@@ -264,7 +266,7 @@ transition({
     import { Component } from '@angular/core';
     import { SsgoiTransitionDirective } from '@ssgoi/angular';
     import { config as springPresets } from '@ssgoi/angular/presets';
-    import type { TransitionParams } from '@ssgoi/core';
+    import type { TransitionParams } from '@ssgoi/angular';
 
     @Component({
       selector: 'app-my-component',

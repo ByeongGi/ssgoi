@@ -15,6 +15,8 @@ SSGOI는 물리 값을 수동으로 조정하지 않고도 다양한 애니메�
 import { config } from '@ssgoi/react/presets';
 // 또는
 import { config } from '@ssgoi/svelte/presets';
+// 또는
+import { config } from '@ssgoi/angular/presets';
 
 // 트랜지션에서 사용
 transition({
@@ -172,7 +174,7 @@ transition({
     import { Ssgoi } from '@ssgoi/angular';
     import { config as springPresets } from '@ssgoi/angular/presets';
     import { fade, slide } from '@ssgoi/angular/view-transitions';
-    import type { SsgoiConfig } from '@ssgoi/core';
+    import type { SsgoiConfig } from '@ssgoi/angular';
 
     @Component({
       selector: 'app-root',
@@ -264,7 +266,7 @@ transition({
     import { Component } from '@angular/core';
     import { SsgoiTransitionDirective } from '@ssgoi/angular';
     import { config as springPresets } from '@ssgoi/angular/presets';
-    import type { TransitionParams } from '@ssgoi/core';
+    import type { TransitionParams } from '@ssgoi/angular';
 
     @Component({
       selector: 'app-my-component',
