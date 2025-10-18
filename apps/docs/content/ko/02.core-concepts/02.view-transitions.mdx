@@ -248,12 +248,12 @@ const scrollAwareTransition = {
   <TabPanel value="angular">
     ```typescript
     import { Component } from '@angular/core';
-    import { SsgoiTransitionComponent } from '@ssgoi/angular';
+    import { SsgoiTransition } from '@ssgoi/angular';
 
     @Component({
       selector: 'app-page',
       standalone: true,
-      imports: [SsgoiTransitionComponent],
+      imports: [SsgoiTransition],
       template: `
         <ssgoi-transition id="/page-path">
           <app-page-content />
