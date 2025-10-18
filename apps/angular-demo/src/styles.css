@@ -81,8 +81,8 @@
 }
 
 body {
-  background-color: #121212;
-  color: var(--color-foreground);
+  /* background-color: #121212; */
+  /* color: var(--color-foreground); */
 }
 
 .page {

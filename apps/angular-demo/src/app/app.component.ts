@@ -1,17 +1,27 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Ssgoi } from '@ssgoi/angular';
-import { fade, hero, jaemin, slide } from '@ssgoi/angular/view-transitions';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import {
+  fade,
+  film,
+  hero,
+  jaemin,
+  slide,
+} from '@ssgoi/angular/view-transitions';
 import type { SsgoiConfig } from '@ssgoi/angular';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Ssgoi],
+  imports: [RouterOutlet, Ssgoi, SidebarComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <ssgoi [config]="ssgoiConfig">
-      <div style="position: relative; min-height: 100vh; width: 100%">
-        <router-outlet />
+      <div class="relative min-h-screen w-full text-gray-100">
+        <app-sidebar />
+        <main class="ml-64 min-h-screen">
+          <router-outlet />
+        </main>
       </div>
     </ssgoi>
   `,
@@ -19,6 +29,10 @@ import type { SsgoiConfig } from '@ssgoi/angular';
 })
 export class AppComponent {
   ssgoiConfig: SsgoiConfig = {
+    middleware(from, to) {
+      console.log('🔍 Transition:', { from, to });
+      return { from, to };
+    },
     transitions: [
       {
         from: '/',
@@ -39,17 +53,7 @@ export class AppComponent {
       {
         from: '/',
         to: '/transitions/*',
-        transition: fade({
-          inSpring: { stiffness: 40, damping: 8 },
-          outSpring: { stiffness: 400, damping: 20 },
-          transitionDelay: 1000,
-        }),
-        symmetric: true,
-      },
-      {
-        to: '/',
-        from: '/transitions/*',
-        transition: slide(),
+        transition: fade(),
         symmetric: true,
       },
     ],

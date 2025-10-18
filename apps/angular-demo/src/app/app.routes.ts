@@ -24,6 +24,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'nested-demo',
+    loadComponent: () =>
+      import('./pages/nested-demo/nested-demo.component').then(
+        (m) => m.NestedDemoComponent
+      ),
+  },
+  {
     path: 'transitions',
     loadComponent: () =>
       import('./pages/transitions/transitions.component').then(
@@ -43,12 +50,5 @@ export const routes: Routes = [
           ).then((m) => m.TransitionDemoDetailComponent),
       },
     ],
-  },
-  {
-    path: 'transitions/:id',
-    loadComponent: () =>
-      import(
-        './components/transition-demo-detail/transition-demo-detail.component'
-      ).then((m) => m.TransitionDemoDetailComponent),
   },
 ];
