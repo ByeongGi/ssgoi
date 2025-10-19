@@ -22,7 +22,22 @@ export const routes: Routes = [
       import('./pages/view-transitions/view-transitions.component').then(
         (m) => m.ViewTransitionsComponent
       ),
+    children: [
+      {
+        path: '',
+        redirectTo: 'fade',
+        pathMatch: 'full',
+      },
+      {
+        path: 'fade',
+        loadComponent: () =>
+          import('./pages/view-transitions/demos/fade.component').then(
+            (m) => m.FadeDemoComponent
+          ),
+      },
+    ],
   },
+
   {
     path: 'nested-demo',
     loadComponent: () =>
