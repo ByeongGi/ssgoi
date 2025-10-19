@@ -30,7 +30,11 @@ import type { SsgoiConfig } from '@ssgoi/angular';
 export class AppComponent {
   ssgoiConfig: SsgoiConfig = {
     middleware(from, to) {
-      console.log('🔍 Transition:', { from, to });
+      // Skip transition if navigating to the same path
+      if (from === to) {
+        return { from: '', to: '' };
+      }
+
       return { from, to };
     },
     transitions: [
