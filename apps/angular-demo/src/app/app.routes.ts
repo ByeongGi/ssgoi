@@ -31,9 +31,16 @@ export const routes: Routes = [
       {
         path: 'fade',
         loadComponent: () =>
-          import('./pages/view-transitions/demos/fade.component').then(
-            (m) => m.FadeDemoComponent
-          ),
+          import(
+            './components/view-transition-demo-detail/fade/fade.component'
+          ).then((m) => m.FadeDemoComponent),
+      },
+      {
+        path: 'scroll',
+        loadComponent: () =>
+          import(
+            './components/view-transition-demo-detail/scroll/scroll.component'
+          ).then((m) => m.ScrollDemoComponent),
       },
     ],
   },

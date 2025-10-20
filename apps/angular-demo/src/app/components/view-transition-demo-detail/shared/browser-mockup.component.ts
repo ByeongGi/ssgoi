@@ -6,6 +6,9 @@ import {
   Type,
   computed,
   effect,
+  ViewChild,
+  ElementRef,
+  output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Ssgoi } from '@ssgoi/angular';
@@ -14,7 +17,8 @@ import type { SsgoiConfig } from '@ssgoi/angular';
 export interface DemoRouteConfig {
   path: string;
   component: Type<any>;
-  label: string;
+  label?: string;
+  props?: Record<string, any>;
 }
 
 @Component({
@@ -24,6 +28,7 @@ export interface DemoRouteConfig {
   template: `
     <div
       class="browser-mockup w-full rounded-lg overflow-hidden shadow-2xl border border-gray-700 h-[500px] md:h-[800px]"
+      [class]="className()"
     >
       <!-- Browser Header -->
       <div class="browser-header bg-gray-800 px-4 py-3 flex items-center gap-3">
@@ -80,19 +85,27 @@ export interface DemoRouteConfig {
       </div>
 
       <!-- Browser Content -->
-      <div class="browser-content bg-gray-900 flex-1 h-full custom-scrollbar">
+      <div
+        #contentRef
+        class="browser-content bg-gray-900 flex-1 overflow-auto h-full custom-scrollbar"
+      >
         <ssgoi [config]="ssgoiConfig()">
-          @if (currentRoute(); as route) {
+          @if (layoutComponent()) {
             <ng-container
               *ngComponentOutlet="
-                route.component;
-                inputs: {
-                  navigate: navigate.bind(this),
-                  routes: routes(),
-                  currentPath: currentPath(),
-                }
+                layoutComponent();
+                inputs: layoutInputsWithRoute()
               "
             />
+          } @else {
+            @if (currentRoute(); as route) {
+              <ng-container
+                *ngComponentOutlet="
+                  route.component;
+                  inputs: mergeInputs(route.props || {})
+                "
+              />
+            }
           }
         </ssgoi>
       </div>
@@ -123,8 +136,14 @@ export class BrowserMockupComponent {
   routes = input.required<DemoRouteConfig[]>();
   ssgoiConfig = input.required<SsgoiConfig>();
   initialPath = input<string>('');
+  className = input<string>('');
+  layoutComponent = input<Type<any> | null>(null);
+
+  navigateEvent = output<string>();
 
   currentPath = signal<string>('');
+
+  @ViewChild('contentRef') contentRef?: ElementRef<HTMLDivElement>;
 
   constructor() {
     // Initialize path when routes are available
@@ -146,6 +165,41 @@ export class BrowserMockupComponent {
 
   navigate(path: string) {
     if (path === this.currentPath()) return;
+
     this.currentPath.set(path);
+    this.navigateEvent.emit(path);
+
+    // Force scroll to top on navigation
+    if (this.contentRef) {
+      this.contentRef.nativeElement.scrollTop = 0;
+    }
+  }
+
+  layoutInputs(): Record<string, any> {
+    return {
+      navigate: this.navigate.bind(this),
+      routes: this.routes(),
+      currentPath: this.currentPath(),
+    };
+  }
+
+  layoutInputsWithRoute(): Record<string, any> {
+    const route = this.currentRoute();
+    return {
+      navigate: this.navigate.bind(this),
+      routes: this.routes(),
+      currentPath: this.currentPath(),
+      currentRouteComponent: route?.component,
+      currentRouteProps: route?.props || {},
+    };
+  }
+
+  mergeInputs(routeProps: Record<string, any>): Record<string, any> {
+    return {
+      ...routeProps,
+      navigate: this.navigate.bind(this),
+      routes: this.routes(),
+      currentPath: this.currentPath(),
+    };
   }
 }
