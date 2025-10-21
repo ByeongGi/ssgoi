@@ -6,15 +6,17 @@ import { SsgoiTransitionDirective } from "./ssgoi-transition.directive";
   imports: [SsgoiTransitionDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  template: `
-    <div
-      [ssgoiTransition]="id()"
-      [attr.data-ssgoi-transition]="id()"
-      [class]="className()"
-    >
-      <ng-content />
-    </div>
-  `,
+  hostDirectives: [
+    {
+      directive: SsgoiTransitionDirective,
+      inputs: ["ssgoiTransition: id"],
+    },
+  ],
+  host: {
+    "[attr.data-ssgoi-transition]": "id()",
+    "[class]": "className()",
+  },
+  template: `<ng-content />`,
 })
 export class SsgoiTransition {
   readonly id = input.required<string>();
