@@ -89,19 +89,19 @@ Wraps individual pages/routes for transitions.
 
 ### Directive
 
-#### `SsgoiTransitionDirective`
+#### `TransitionDirective`
 
-Directive for element-level transitions.
+Directive for element-level transitions (mount/unmount animations).
 
 ```typescript
 import { Component } from '@angular/core';
-import { SsgoiTransitionDirective } from '@ssgoi/angular';
-import { injectSsgoi } from '@ssgoi/angular';
+import { TransitionDirective } from '@ssgoi/angular';
+import { fadeIn } from '@ssgoi/angular/transitions';
 
 @Component({
   selector: 'app-example',
-  imports: [SsgoiTransitionDirective],
-  template: `<div [ssgoiTransition]="'my-element'">Content</div>`
+  imports: [TransitionDirective],
+  template: `<div [transition]="fadeIn()">Content</div>`
 })
 export class ExampleComponent {}
 ```
