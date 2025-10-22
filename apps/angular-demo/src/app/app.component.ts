@@ -1,15 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Ssgoi } from '@ssgoi/angular';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
-import {
-  fade,
-  film,
-  hero,
-  jaemin,
-  slide,
-} from '@ssgoi/angular/view-transitions';
 import type { SsgoiConfig } from '@ssgoi/angular';
+import { Ssgoi } from '@ssgoi/angular';
+import { fade, hero, jaemin } from '@ssgoi/angular/view-transitions';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-root',
@@ -59,6 +53,11 @@ export class AppComponent {
         to: '/transitions/*',
         transition: fade(),
         symmetric: true,
+      },
+      {
+        from: '/transitions/*',
+        to: '/transitions/*',
+        transition: fade(),
       },
     ],
   };
