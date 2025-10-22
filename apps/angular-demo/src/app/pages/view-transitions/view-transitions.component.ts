@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Ssgoi, SsgoiConfig, SsgoiTransition } from '@ssgoi/angular';
-import { scroll } from '@ssgoi/angular/view-transitions';
+import { SsgoiTransition } from '@ssgoi/angular';
 
 @Component({
   selector: 'app-view-transitions',
-  imports: [RouterOutlet, SsgoiTransition, Ssgoi],
+  imports: [RouterOutlet, SsgoiTransition],
   template: `
     <ssgoi-transition id="/view-transitions">
       <div class="flex min-h-screen bg-gray-950 text-gray-100">
@@ -13,22 +12,13 @@ import { scroll } from '@ssgoi/angular/view-transitions';
         <main class="flex-1 p-8">
           <div class="max-w-4xl mx-auto">
             <div class="space-y-6">
-              <ssgoi [config]="config">
-                <div style="position: relative; min-height: 100vh; width: 100%">
-                  <router-outlet />
-                </div>
-              </ssgoi>
+              <router-outlet />
             </div>
           </div>
         </main>
       </div>
     </ssgoi-transition>
   `,
-  styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ViewTransitionsComponent {
-  config: SsgoiConfig = {
-    defaultTransition: scroll(),
-  };
-}
+export class ViewTransitionsComponent {}

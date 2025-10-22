@@ -19,7 +19,6 @@ function createSsgoiContext(component: Ssgoi): SsgoiContext | undefined {
     // Return a no-op context for SSR
     return undefined;
   }
-
   return createSggoiTransitionContext(component.config());
 }
 
@@ -37,5 +36,5 @@ function createSsgoiContext(component: Ssgoi): SsgoiContext | undefined {
   ],
 })
 export class Ssgoi {
-  readonly config = input.required<SsgoiConfig>();
+  readonly config = input<SsgoiConfig>({});
 }

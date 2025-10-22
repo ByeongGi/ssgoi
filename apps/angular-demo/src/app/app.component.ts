@@ -59,6 +59,11 @@ export class AppComponent {
         to: '/transitions/*',
         transition: fade(),
       },
+      {
+        from: '/*',
+        to: '/view-transitions/*',
+        transition: fade(),
+      },
     ],
   };
 }
