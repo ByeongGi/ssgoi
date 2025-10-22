@@ -8,17 +8,10 @@ import type { DemoRouteConfig } from '../shared/browser-mockup.component';
 
 @Component({
   selector: 'app-fade-demo-start',
-  imports: [CommonModule, DemoLayoutComponent],
+  imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <app-demo-layout
-        [routes]="demoRoutes"
-        [navigate]="navigate()"
-        [currentPath]="currentPath()"
-        logo="⚡"
-        title="SSGOI"
-      >
-        <div
+     <div
           class="min-h-full bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100 p-8"
         >
           <div class="max-w-4xl mx-auto px-4 py-12">
@@ -78,7 +71,6 @@ import type { DemoRouteConfig } from '../shared/browser-mockup.component';
             </div>
           </div>
         </div>
-      </app-demo-layout>
   `,
 })
 export class FadeDemoStartComponent {

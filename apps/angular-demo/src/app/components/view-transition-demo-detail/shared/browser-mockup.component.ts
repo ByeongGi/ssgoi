@@ -1,29 +1,24 @@
 import {
   Component,
   ChangeDetectionStrategy,
-  signal,
   input,
   Type,
-  computed,
-  effect,
   ViewChild,
   ElementRef,
   output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Ssgoi } from '@ssgoi/angular';
-import type { SsgoiConfig } from '@ssgoi/angular';
 
 export interface DemoRouteConfig {
   path: string;
-  component: Type<any>;
+  component?: Type<any>;
   label?: string;
   props?: Record<string, any>;
 }
 
 @Component({
   selector: 'app-browser-mockup',
-  imports: [CommonModule, Ssgoi],
+  imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div
@@ -89,25 +84,7 @@ export interface DemoRouteConfig {
         #contentRef
         class="browser-content bg-gray-900 flex-1 overflow-auto h-full custom-scrollbar"
       >
-        <ssgoi [config]="ssgoiConfig()">
-          @if (layoutComponent()) {
-            <ng-container
-              *ngComponentOutlet="
-                layoutComponent();
-                inputs: layoutInputsWithRoute()
-              "
-            />
-          } @else {
-            @if (currentRoute(); as route) {
-              <ng-container
-                *ngComponentOutlet="
-                  route.component;
-                  inputs: mergeInputs(route.props || {})
-                "
-              />
-            }
-          }
-        </ssgoi>
+        <ng-content></ng-content>
       </div>
     </div>
   `,
@@ -133,73 +110,13 @@ export interface DemoRouteConfig {
   ],
 })
 export class BrowserMockupComponent {
-  routes = input.required<DemoRouteConfig[]>();
-  ssgoiConfig = input.required<SsgoiConfig>();
-  initialPath = input<string>('');
   className = input<string>('');
-  layoutComponent = input<Type<any> | null>(null);
 
   navigateEvent = output<string>();
 
-  currentPath = signal<string>('');
+  currentPath = input<string>('');
 
   @ViewChild('contentRef') contentRef?: ElementRef<HTMLDivElement>;
 
-  constructor() {
-    // Initialize path when routes are available
-    effect(() => {
-      const routes = this.routes();
-      if (routes.length > 0 && !this.currentPath()) {
-        const initial = this.initialPath() || routes[0]?.path || '/';
-        this.currentPath.set(initial);
-      }
-    });
-  }
-
-  currentRoute = computed(() => {
-    return (
-      this.routes().find((r) => r.path === this.currentPath()) ||
-      this.routes()[0]
-    );
-  });
-
-  navigate(path: string) {
-    if (path === this.currentPath()) return;
-
-    this.currentPath.set(path);
-    this.navigateEvent.emit(path);
-
-    // Force scroll to top on navigation
-    if (this.contentRef) {
-      this.contentRef.nativeElement.scrollTop = 0;
-    }
-  }
-
-  layoutInputs(): Record<string, any> {
-    return {
-      navigate: this.navigate.bind(this),
-      routes: this.routes(),
-      currentPath: this.currentPath(),
-    };
-  }
-
-  layoutInputsWithRoute(): Record<string, any> {
-    const route = this.currentRoute();
-    return {
-      navigate: this.navigate.bind(this),
-      routes: this.routes(),
-      currentPath: this.currentPath(),
-      currentRouteComponent: route?.component,
-      currentRouteProps: route?.props || {},
-    };
-  }
-
-  mergeInputs(routeProps: Record<string, any>): Record<string, any> {
-    return {
-      ...routeProps,
-      navigate: this.navigate.bind(this),
-      routes: this.routes(),
-      currentPath: this.currentPath(),
-    };
-  }
+  constructor() {}
 }

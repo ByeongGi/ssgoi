@@ -1,6 +1,11 @@
-import { Component, ChangeDetectionStrategy, input } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  input,
+  output,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SsgoiTransition } from '@ssgoi/angular';
+import { DemoRouteConfig } from './browser-mockup.component';
 
 export interface DemoRoute {
   path: string;
@@ -9,7 +14,7 @@ export interface DemoRoute {
 
 @Component({
   selector: 'app-demo-layout',
-  imports: [CommonModule, SsgoiTransition],
+  imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="flex flex-col h-full">
@@ -25,7 +30,7 @@ export interface DemoRoute {
               <nav class="flex items-center gap-1">
                 @for (route of routes(); track route.path) {
                   <button
-                    (click)="navigate()(route.path)"
+                    (click)="onNavigate(route.path)"
                     [class.bg-gray-700]="currentPath() === route.path"
                     [class.text-white]="currentPath() === route.path"
                     [class.text-gray-300]="currentPath() !== route.path"
@@ -70,9 +75,7 @@ export interface DemoRoute {
 
       <!-- Main Content -->
       <main class="flex-1 overflow-auto relative z-0">
-        <ssgoi-transition [id]="currentPath()">
-          <ng-content />
-        </ssgoi-transition>
+        <ng-content />
       </main>
     </div>
   `,
@@ -80,8 +83,11 @@ export interface DemoRoute {
 export class DemoLayoutComponent {
   logo = input<string>('⚡');
   title = input<string>('SSGOI Demo');
-  routes = input.required<DemoRoute[]>();
-  navigate = input.required<(path: string) => void>();
+  routes = input.required<DemoRouteConfig[]>();
   currentPath = input.required<string>();
   showHeaderActions = input<boolean>(true);
+  navigate = output<string>();
+  onNavigate(path: string) {
+    this.navigate.emit(path);
+  }
 }
