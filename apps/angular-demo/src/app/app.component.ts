@@ -10,14 +10,14 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
   imports: [RouterOutlet, Ssgoi, SidebarComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <ssgoi [config]="ssgoiConfig">
-      <div class="relative min-h-screen w-full text-gray-100">
-        <app-sidebar />
-        <main class="ml-64 min-h-screen">
+    <app-sidebar />
+    <div class="ml-64">
+      <ssgoi [config]="ssgoiConfig">
+        <main class="relative min-h-screen w-full text-gray-100">
           <router-outlet />
         </main>
-      </div>
-    </ssgoi>
+      </ssgoi>
+    </div>
   `,
   styles: [],
 })
@@ -32,22 +32,22 @@ export class AppComponent {
       return { from, to };
     },
     transitions: [
-      {
-        from: '/',
-        to: '/item/*',
-        transition: hero({ spring: { stiffness: 5, damping: 1 } }),
-        symmetric: true,
-      },
-      {
-        from: '/',
-        to: '/jaemin',
-        transition: jaemin(),
-      },
-      {
-        from: '/jaemin',
-        to: '/',
-        transition: fade(),
-      },
+      // {
+      //   from: '/',
+      //   to: '/item/*',
+      //   transition: hero({ spring: { stiffness: 5, damping: 1 } }),
+      //   symmetric: true,
+      // },
+      // {
+      //   from: '/',
+      //   to: '/jaemin',
+      //   transition: jaemin(),
+      // },
+      // {
+      //   from: '/jaemin',
+      //   to: '/',
+      //   transition: fade(),
+      // },
       {
         from: '/',
         to: '/transitions/*',
@@ -60,7 +60,12 @@ export class AppComponent {
         transition: fade(),
       },
       {
-        from: '/*',
+        from: '/',
+        to: '/view-transitions/*',
+        transition: fade(),
+      },
+      {
+        from: '/view-transitions/*',
         to: '/view-transitions/*',
         transition: fade(),
       },
