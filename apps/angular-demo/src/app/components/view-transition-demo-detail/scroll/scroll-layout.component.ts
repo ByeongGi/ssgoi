@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   input,
   signal,
+  output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SsgoiTransition } from '@ssgoi/angular';
@@ -14,7 +15,7 @@ export interface ScrollRoute {
 
 @Component({
   selector: 'app-scroll-layout',
-  imports: [CommonModule, SsgoiTransition],
+  imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="relative bg-gray-900 h-full overflow-hidden">
@@ -92,9 +93,7 @@ export interface ScrollRoute {
           <div
             class="md:ml-0 pt-10 md:pt-0 relative z-0 h-full overflow-hidden"
           >
-            <ssgoi-transition [id]="currentPath()">
-              <ng-content />
-            </ssgoi-transition>
+            <ng-content />
           </div>
         </div>
       </div>
@@ -103,14 +102,13 @@ export interface ScrollRoute {
 })
 export class ScrollLayoutComponent {
   routes = input.required<ScrollRoute[]>();
-  navigate = input.required<(path: string) => void>();
+  navigate = output<string>();
   currentPath = input.required<string>();
 
   isSidebarOpen = signal<boolean>(false);
 
   handleNavigation(path: string) {
-    const navigateFn = this.navigate();
-    navigateFn(path);
+    this.navigate.emit(path);
     // Close sidebar on mobile after navigation
     this.isSidebarOpen.set(false);
   }
