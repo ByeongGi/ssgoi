@@ -1,19 +1,16 @@
-import { Component, ChangeDetectionStrategy, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  DemoLayoutComponent,
-  type DemoRoute,
-} from '../shared/demo-layout.component';
-import type { DemoRouteConfig } from '../shared/browser-mockup.component';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { SsgoiTransition } from '@ssgoi/angular';
 
 @Component({
   selector: 'app-fade-demo-start',
-  imports: [CommonModule],
+  imports: [CommonModule, SsgoiTransition],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-     <div
-          class="min-h-full bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100 p-8"
-        >
+    <ssgoi-transition id="/fade/start">
+      <div
+        class="min-h-full bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100 p-8"
+      >
           <div class="max-w-4xl mx-auto px-4 py-12">
             <h1 class="text-4xl font-bold text-white mb-8">Get Started</h1>
 
@@ -71,20 +68,11 @@ import type { DemoRouteConfig } from '../shared/browser-mockup.component';
             </div>
           </div>
         </div>
+
+    </ssgoi-transition>
   `,
 })
 export class FadeDemoStartComponent {
-  navigate = input.required<(path: string) => void>();
-  routes = input.required<DemoRouteConfig[]>();
-  currentPath = input.required<string>();
-
-  demoRoutes: DemoRoute[] = [
-    { path: '/fade', label: 'Home' },
-    { path: '/fade/features', label: 'Features' },
-    { path: '/fade/examples', label: 'Examples' },
-    { path: '/fade/start', label: 'Start' },
-  ];
-
   configCode = `import { provideSsgoi } from '@ssgoi/angular';
 import { fade } from '@ssgoi/angular/view-transitions';
 

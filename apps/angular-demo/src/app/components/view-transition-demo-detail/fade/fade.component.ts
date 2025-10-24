@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { Ssgoi, SsgoiTransition } from '@ssgoi/angular';
+import { Ssgoi } from '@ssgoi/angular';
 import { fade } from '@ssgoi/angular/view-transitions';
 import {
   BrowserMockupComponent,
@@ -18,7 +18,6 @@ import { FadeDemoStartComponent } from './fade-demo-start.component';
     BrowserMockupComponent,
     DemoLayoutComponent,
     Ssgoi,
-    SsgoiTransition,
     FadeDemoHomeComponent,
     FadeDemoFeaturesComponent,
     FadeDemoExamplesComponent,
@@ -36,38 +35,20 @@ import { FadeDemoStartComponent } from './fade-demo-start.component';
           (navigate)="onNavigate($event)"
         >
           @for (page of [currentPath()]; track page) {
-            <ssgoi-transition [id]="page">
-              @switch (page) {
-                @case ('/fade') {
-                  <app-fade-demo-home
-                    [navigate]="navigateTo"
-                    [routes]="routes"
-                    [currentPath]="currentPath()"
-                  />
-                }
-                @case ('/fade/features') {
-                  <app-fade-demo-features
-                    [navigate]="navigateTo"
-                    [routes]="routes"
-                    [currentPath]="currentPath()"
-                  />
-                }
-                @case ('/fade/examples') {
-                  <app-fade-demo-examples
-                    [navigate]="navigateTo"
-                    [routes]="routes"
-                    [currentPath]="currentPath()"
-                  />
-                }
-                @case ('/fade/start') {
-                  <app-fade-demo-start
-                    [navigate]="navigateTo"
-                    [routes]="routes"
-                    [currentPath]="currentPath()"
-                  />
-                }
+            @switch (page) {
+              @case ('/fade') {
+                <app-fade-demo-home (navigate)="onNavigate($event)" />
               }
-            </ssgoi-transition>
+              @case ('/fade/features') {
+                <app-fade-demo-features />
+              }
+              @case ('/fade/examples') {
+                <app-fade-demo-examples />
+              }
+              @case ('/fade/start') {
+                <app-fade-demo-start />
+              }
+            }
           }
         </app-demo-layout>
       </ssgoi>
@@ -75,25 +56,19 @@ import { FadeDemoStartComponent } from './fade-demo-start.component';
   `,
 })
 export class FadeDemoComponent {
+  currentPath = signal('/fade');
   readonly routes: DemoRouteConfig[] = [
     { path: '/fade', label: 'Home' },
     { path: '/fade/features', label: 'Features' },
     { path: '/fade/examples', label: 'Examples' },
     { path: '/fade/start', label: 'Start' },
   ];
-
   readonly ssgoiConfig = {
     defaultTransition: fade(),
   };
 
-  currentPath = signal('/fade');
-
-  // Arrow function to avoid .bind(this)
-  navigateTo = (path: string) => {
-    this.currentPath.set(path);
-  };
-
   onNavigate(path: string) {
+    console.log('path', path);
     this.currentPath.set(path);
   }
 }
