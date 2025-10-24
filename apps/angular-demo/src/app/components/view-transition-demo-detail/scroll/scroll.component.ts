@@ -7,12 +7,14 @@ import { ScrollDemoFeaturesComponent } from './scroll-demo-features.component';
 import { ScrollDemoIntroComponent } from './scroll-demo-intro.component';
 import { ScrollDemoUsageComponent } from './scroll-demo-usage.component';
 import { ScrollLayoutComponent, ScrollRoute } from './scroll-layout.component';
+import { DemoLayoutComponent } from '../shared/demo-layout.component';
 
 // Main Scroll Demo Component
 @Component({
   selector: 'app-scroll-demo',
   imports: [
     ScrollLayoutComponent,
+    DemoLayoutComponent,
     BrowserMockupComponent,
     Ssgoi,
     ScrollDemoIntroComponent,
@@ -24,44 +26,34 @@ import { ScrollLayoutComponent, ScrollRoute } from './scroll-layout.component';
   template: `
     <app-browser-mockup [currentPath]="currentPath()">
       <ssgoi [config]="ssgoiConfig">
-        <app-scroll-layout
+        <app-demo-layout
           [routes]="routes"
-          [navigate]="navigateTo"
           [currentPath]="currentPath()"
+          (navigate)="onNavigate($event)"
         >
-          @for (page of [currentPath()]; track page) {
-            @switch (page) {
-              @case ('/scroll/intro') {
-                <app-scroll-demo-intro
-                  [navigate]="navigateTo"
-                  [routes]="routes"
-                  [currentPath]="currentPath()"
-                />
-              }
-              @case ('/scroll/features') {
-                <app-scroll-demo-features
-                  [navigate]="navigateTo"
-                  [routes]="routes"
-                  [currentPath]="currentPath()"
-                />
-              }
-              @case ('/scroll/usage') {
-                <app-scroll-demo-usage
-                  [navigate]="navigateTo"
-                  [routes]="routes"
-                  [currentPath]="currentPath()"
-                />
-              }
-              @case ('/scroll/examples') {
-                <app-scroll-demo-examples
-                  [navigate]="navigateTo"
-                  [routes]="routes"
-                  [currentPath]="currentPath()"
-                />
+          <app-scroll-layout
+            [routes]="scrollRoutes"
+            [navigate]="navigateTo"
+            [currentPath]="currentPath()"
+          >
+            @for (page of [currentPath()]; track page) {
+              @switch (page) {
+                @case ('/scroll/intro') {
+                  <app-scroll-demo-intro />
+                }
+                @case ('/scroll/features') {
+                  <app-scroll-demo-features />
+                }
+                @case ('/scroll/usage') {
+                  <app-scroll-demo-usage />
+                }
+                @case ('/scroll/examples') {
+                  <app-scroll-demo-examples />
+                }
               }
             }
-          }
-        </app-scroll-layout>
+          </app-scroll-layout>
+        </app-demo-layout>
       </ssgoi>
     </app-browser-mockup>
   `,
@@ -72,6 +64,13 @@ export class ScrollDemoComponent {
     { path: '/scroll/features', label: 'Features' },
     { path: '/scroll/usage', label: 'Usage' },
     { path: '/scroll/examples', label: 'Examples' },
+  ];
+
+  readonly scrollRoutes: ScrollRoute[] = [
+    { path: '/scroll/intro', label: '📝 Introduction' },
+    { path: '/scroll/features', label: '✨ Features' },
+    { path: '/scroll/usage', label: '🚀 Usage' },
+    { path: '/scroll/examples', label: '💡 Examples' },
   ];
 
   readonly ssgoiConfig = {
