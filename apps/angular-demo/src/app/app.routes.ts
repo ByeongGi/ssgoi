@@ -4,18 +4,32 @@ export const routes: Routes = [
   {
     path: '',
     loadComponent: () =>
-      import('./pages/home/home.component').then((m) => m.HomeComponent),
+      import('./pages/home/home-layout.component').then(
+        (m) => m.HomeLayoutComponent
+      ),
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('./pages/home/home.component').then((m) => m.HomeComponent),
+      },
+      {
+        path: 'item/:id',
+        loadComponent: () =>
+          import('./pages/home/item/item.component').then(
+            (m) => m.ItemComponent
+          ),
+      },
+      {
+        path: 'jaemin',
+        loadComponent: () =>
+          import('./pages/home/jaemin/jaemin.component').then(
+            (m) => m.JaeminComponent
+          ),
+      },
+    ],
   },
-  {
-    path: 'item/:id',
-    loadComponent: () =>
-      import('./pages/item/item.component').then((m) => m.ItemComponent),
-  },
-  {
-    path: 'jaemin',
-    loadComponent: () =>
-      import('./pages/jaemin/jaemin.component').then((m) => m.JaeminComponent),
-  },
+
   {
     path: 'view-transitions',
     loadComponent: () =>
@@ -41,6 +55,13 @@ export const routes: Routes = [
           import(
             './components/view-transition-demo-detail/scroll/scroll.component'
           ).then((m) => m.ScrollDemoComponent),
+      },
+      {
+        path: 'hero',
+        loadComponent: () =>
+          import(
+            './components/view-transition-demo-detail/hero/hero.component'
+          ).then((m) => m.HeroDemoComponent),
       },
     ],
   },
