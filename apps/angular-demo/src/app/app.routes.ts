@@ -84,6 +84,13 @@ export const routes: Routes = [
             './components/view-transition-demo-detail/blind/blind.component'
           ).then((m) => m.BlindDemoComponent),
       },
+      {
+        path: 'slide',
+        loadComponent: () =>
+          import(
+            './components/view-transition-demo-detail/slide/slide.component'
+          ).then((m) => m.SlideDemoComponent),
+      },
     ],
   },
 
