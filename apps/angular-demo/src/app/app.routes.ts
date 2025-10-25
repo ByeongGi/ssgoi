@@ -63,6 +63,20 @@ export const routes: Routes = [
             './components/view-transition-demo-detail/hero/hero.component'
           ).then((m) => m.HeroDemoComponent),
       },
+      {
+        path: 'pinterest',
+        loadComponent: () =>
+          import(
+            './components/view-transition-demo-detail/pinterest/pinterest.component'
+          ).then((m) => m.PinterestDemoComponent),
+      },
+      {
+        path: 'drill',
+        loadComponent: () =>
+          import(
+            './components/view-transition-demo-detail/drill/drill.component'
+          ).then((m) => m.DrillDemoComponent),
+      },
     ],
   },
 

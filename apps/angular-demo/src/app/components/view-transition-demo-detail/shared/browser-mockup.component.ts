@@ -6,6 +6,7 @@ import {
   ViewChild,
   ElementRef,
   output,
+  effect,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -118,5 +119,13 @@ export class BrowserMockupComponent {
 
   @ViewChild('contentRef') contentRef?: ElementRef<HTMLDivElement>;
 
-  constructor() {}
+  constructor() {
+    // Force scroll to top on navigation
+    effect(() => {
+      const path = this.currentPath();
+      if (this.contentRef?.nativeElement) {
+        this.contentRef.nativeElement.scrollTop = 0;
+      }
+    });
+  }
 }
