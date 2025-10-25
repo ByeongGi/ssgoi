@@ -221,23 +221,25 @@ nav-title: "Quick Start"
 
     ```typescript
     // app.component.ts
-    import { Component } from '@angular/core';
-    import { RouterOutlet } from '@angular/router';
-    import { Ssgoi } from '@ssgoi/angular';
-    import { fade } from '@ssgoi/angular/view-transitions';
-    import type { SsgoiConfig } from '@ssgoi/angular';
+    import { Component } from "@angular/core";
+    import { RouterOutlet } from "@angular/router";
+    import { Ssgoi } from "@ssgoi/angular";
+    import { fade } from "@ssgoi/angular/view-transitions";
+    import type { SsgoiConfig } from "@ssgoi/angular";
 
     @Component({
-      selector: 'app-root',
+      selector: "app-root",
       standalone: true,
       imports: [RouterOutlet, Ssgoi],
       template: `
-        <ssgoi [config]="ssgoiConfig">
-          <!-- ⚠️ Important: position: relative is required! -->
-          <div style="position: relative; min-height: 100vh;">
-            <router-outlet />
-          </div>
-        </ssgoi>
+        <!-- ⚠️ Important: position: relative is required! -->
+        <div
+          ssgoi
+          [config]="ssgoiConfig"
+          style="position: relative; min-height: 100vh;"
+        >
+          <router-outlet />
+        </div>
       `,
     })
     export class AppComponent {
@@ -254,39 +256,39 @@ nav-title: "Quick Start"
 
     ```typescript
     // home.component.ts
-    import { Component } from '@angular/core';
-    import { SsgoiTransition } from '@ssgoi/angular';
+    import { Component } from "@angular/core";
+    import { SsgoiTransition } from "@ssgoi/angular";
 
     @Component({
-      selector: 'app-home',
+      selector: "app-home",
       standalone: true,
       imports: [SsgoiTransition],
       template: `
-        <ssgoi-transition id="/">
+        <section [ssgoiTransition]="'/'">
           <main>
             <h1>Home Page</h1>
             <!-- Page content -->
           </main>
-        </ssgoi-transition>
+        </section>
       `,
     })
     export class HomeComponent {}
 
     // about.component.ts
-    import { Component } from '@angular/core';
-    import { SsgoiTransition } from '@ssgoi/angular';
+    import { Component } from "@angular/core";
+    import { SsgoiTransition } from "@ssgoi/angular";
 
     @Component({
-      selector: 'app-about',
+      selector: "app-about",
       standalone: true,
       imports: [SsgoiTransition],
       template: `
-        <ssgoi-transition id="/about">
+        <section [ssgoiTransition]="'/about'">
           <main>
             <h1>About Page</h1>
             <!-- Page content -->
           </main>
-        </ssgoi-transition>
+        </section>
       `,
     })
     export class AboutComponent {}
@@ -389,22 +391,24 @@ nav-title: "Quick Start"
   <TabPanel value="angular">
     ```typescript
     // app.component.ts
-    import { Component } from '@angular/core';
-    import { RouterOutlet } from '@angular/router';
-    import { Ssgoi } from '@ssgoi/angular';
+    import { Component } from "@angular/core";
+    import { RouterOutlet } from "@angular/router";
+    import { Ssgoi } from "@ssgoi/angular";
     import { scroll, fade, drill } from "@ssgoi/angular/view-transitions";
-    import type { SsgoiConfig } from '@ssgoi/angular';
+    import type { SsgoiConfig } from "@ssgoi/angular";
 
     @Component({
-      selector: 'app-root',
+      selector: "app-root",
       standalone: true,
       imports: [RouterOutlet, Ssgoi],
       template: `
-        <ssgoi [config]="ssgoiConfig">
-          <div style="position: relative; min-height: 100vh;">
-            <router-outlet />
-          </div>
-        </ssgoi>
+        <div
+          ssgoi
+          [config]="ssgoiConfig"
+          style="position: relative; min-height: 100vh;"
+        >
+          <router-outlet />
+        </div>
       `,
     })
     export class AppComponent {

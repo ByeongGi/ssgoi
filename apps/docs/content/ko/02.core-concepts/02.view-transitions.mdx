@@ -87,21 +87,23 @@ interface SsgoiConfig {
   </TabPanel>
   <TabPanel value="angular">
     ```typescript
-    import { Component } from '@angular/core';
-    import { Ssgoi } from '@ssgoi/angular';
-    import { fade, scroll } from '@ssgoi/angular/view-transitions';
-    import type { SsgoiConfig } from '@ssgoi/angular';
+    import { Component } from "@angular/core";
+    import { Ssgoi } from "@ssgoi/angular";
+    import { fade, scroll } from "@ssgoi/angular/view-transitions";
+    import type { SsgoiConfig } from "@ssgoi/angular";
 
     @Component({
-      selector: 'app-root',
+      selector: "app-root",
       standalone: true,
       imports: [Ssgoi],
       template: `
-        <ssgoi [config]="ssgoiConfig">
-          <div style="position: relative; min-height: 100vh;">
-            <router-outlet />
-          </div>
-        </ssgoi>
+        <div
+          ssgoi
+          [config]="ssgoiConfig"
+          style="position: relative; min-height: 100vh;"
+        >
+          <router-outlet />
+        </div>
       `
     })
     export class AppComponent {
@@ -216,9 +218,9 @@ const scrollAwareTransition = {
 };
 ```
 
-## SsgoiTransition 컴포넌트
+## SsgoiTransition 래퍼
 
-각 페이지를 감싸는 래퍼 컴포넌트:
+각 페이지를 감싸는 래퍼 컴포넌트(Angular에서는 디렉티브):
 
 <Tabs items={[{ label: "React", value: "react" }, { label: "Svelte", value: "svelte" }, { label: "Angular", value: "angular" }]}>
   <TabPanel value="react">
@@ -247,17 +249,17 @@ const scrollAwareTransition = {
   </TabPanel>
   <TabPanel value="angular">
     ```typescript
-    import { Component } from '@angular/core';
-    import { SsgoiTransition } from '@ssgoi/angular';
+    import { Component } from "@angular/core";
+    import { SsgoiTransition } from "@ssgoi/angular";
 
     @Component({
-      selector: 'app-page',
+      selector: "app-page",
       standalone: true,
       imports: [SsgoiTransition],
       template: `
-        <ssgoi-transition id="/page-path">
+        <section [ssgoiTransition]="'/page-path'">
           <app-page-content />
-        </ssgoi-transition>
+        </section>
       `
     })
     export class PageComponent {}
@@ -265,8 +267,8 @@ const scrollAwareTransition = {
   </TabPanel>
 </Tabs>
 
-- `id`: 경로 매칭에 사용되는 식별자
-- 이 ID가 config의 from/to 패턴과 매칭됨
+- `ssgoiTransition`: 경로 매칭에 사용되는 식별자
+- 이 값이 config의 from/to 패턴과 매칭됨
 
 ## 동작 흐름
 

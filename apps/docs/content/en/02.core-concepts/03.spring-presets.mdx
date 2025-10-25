@@ -170,20 +170,20 @@ transition({
   </TabPanel>
   <TabPanel value="angular">
     ```typescript
-    import { Component } from '@angular/core';
-    import { Ssgoi } from '@ssgoi/angular';
-    import { config } from '@ssgoi/angular/presets';
-    import { fade, slide } from '@ssgoi/angular/view-transitions';
-    import type { SsgoiConfig } from '@ssgoi/angular';
+    import { Component } from "@angular/core";
+    import { Ssgoi } from "@ssgoi/angular";
+    import { config } from "@ssgoi/angular/presets";
+    import { fade, slide } from "@ssgoi/angular/view-transitions";
+    import type { SsgoiConfig } from "@ssgoi/angular";
 
     @Component({
-      selector: 'app-root',
+      selector: "app-root",
       standalone: true,
       imports: [Ssgoi],
       template: `
-        <ssgoi [config]="config">
+        <div ssgoi [config]="config">
           <!-- App content -->
-        </ssgoi>
+        </div>
       `
     })
     export class AppComponent {

@@ -87,21 +87,23 @@ interface SsgoiConfig {
   </TabPanel>
   <TabPanel value="angular">
     ```typescript
-    import { Component } from '@angular/core';
-    import { Ssgoi } from '@ssgoi/angular';
-    import { fade, scroll } from '@ssgoi/angular/view-transitions';
-    import type { SsgoiConfig } from '@ssgoi/angular';
+    import { Component } from "@angular/core";
+    import { Ssgoi } from "@ssgoi/angular";
+    import { fade, scroll } from "@ssgoi/angular/view-transitions";
+    import type { SsgoiConfig } from "@ssgoi/angular";
 
     @Component({
-      selector: 'app-root',
+      selector: "app-root",
       standalone: true,
       imports: [Ssgoi],
       template: `
-        <ssgoi [config]="ssgoiConfig">
-          <div style="position: relative; min-height: 100vh;">
-            <router-outlet />
-          </div>
-        </ssgoi>
+        <div
+          ssgoi
+          [config]="ssgoiConfig"
+          style="position: relative; min-height: 100vh;"
+        >
+          <router-outlet />
+        </div>
       `
     })
     export class AppComponent {
@@ -216,9 +218,9 @@ const scrollAwareTransition = {
 };
 ```
 
-## SsgoiTransition组件
+## SsgoiTransition 包装器
 
-包装每个页面的包装器组件：
+包装每个页面的包装器组件（在 Angular 中为指令）：
 
 <Tabs items={[{ label: "React", value: "react" }, { label: "Svelte", value: "svelte" }, { label: "Angular", value: "angular" }]}>
   <TabPanel value="react">
@@ -247,17 +249,17 @@ const scrollAwareTransition = {
   </TabPanel>
   <TabPanel value="angular">
     ```typescript
-    import { Component } from '@angular/core';
-    import { SsgoiTransition } from '@ssgoi/angular';
+    import { Component } from "@angular/core";
+    import { SsgoiTransition } from "@ssgoi/angular";
 
     @Component({
-      selector: 'app-page',
+      selector: "app-page",
       standalone: true,
       imports: [SsgoiTransition],
       template: `
-        <ssgoi-transition id="/page-path">
+        <section [ssgoiTransition]="'/page-path'">
           <app-page-content />
-        </ssgoi-transition>
+        </section>
       `
     })
     export class PageComponent {}
@@ -265,8 +267,8 @@ const scrollAwareTransition = {
   </TabPanel>
 </Tabs>
 
-- `id`: 用于路由匹配的标识符
-- 这个ID与配置中的from/to模式进行匹配
+- `ssgoiTransition`: 用于路由匹配的标识符
+- 该值会与配置中的from/to模式进行匹配
 
 ## 操作流程
 
