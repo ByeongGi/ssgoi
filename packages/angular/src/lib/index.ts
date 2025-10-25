@@ -1,5 +1,5 @@
-export { Ssgoi } from "./ssgoi.component";
-export { SsgoiTransition } from "./ssgoi-transition.component";
+export { Ssgoi } from "./ssgoi.directive";
+export { SsgoiTransition } from "./ssgoi-transition.directive";
 export {
   TransitionDirective,
   TransitionDirectiveConfig,
