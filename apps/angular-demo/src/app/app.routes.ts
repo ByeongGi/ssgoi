@@ -91,6 +91,13 @@ export const routes: Routes = [
             './components/view-transition-demo-detail/slide/slide.component'
           ).then((m) => m.SlideDemoComponent),
       },
+      {
+        path: 'jaemin',
+        loadComponent: () =>
+          import(
+            './components/view-transition-demo-detail/jaemin/jaemin.component'
+          ).then((m) => m.JaeminDemoComponent),
+      },
     ],
   },
 
