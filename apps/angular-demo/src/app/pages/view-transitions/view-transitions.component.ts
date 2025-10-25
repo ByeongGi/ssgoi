@@ -6,7 +6,7 @@ import { SsgoiTransition } from '@ssgoi/angular';
   selector: 'app-view-transitions',
   imports: [RouterOutlet, SsgoiTransition],
   template: `
-    <ssgoi-transition id="/view-transitions">
+    <div ssgoiTransition="/view-transitions">
       <div class="flex min-h-screen bg-gray-950 text-gray-100">
         <!-- Right Demo Area -->
         <main class="flex-1 p-8">
@@ -17,7 +17,7 @@ import { SsgoiTransition } from '@ssgoi/angular';
           </div>
         </main>
       </div>
-    </ssgoi-transition>
+    </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

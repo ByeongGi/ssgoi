@@ -14,7 +14,7 @@ interface ColorItem {
   selector: 'app-home',
   imports: [RouterLink, SsgoiTransition, TransitionDirective],
   template: `
-    <ssgoi-transition id="/">
+    <div ssgoiTransition="/">
       <div class="max-w-7xl mx-auto px-8 py-12">
         <div class="text-center mb-12">
           <h1 class="text-5xl font-bold mb-2 tracking-tight text-gray-900">
@@ -245,7 +245,7 @@ interface ColorItem {
           </div>
         </div>
       </div>
-    </ssgoi-transition>
+    </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

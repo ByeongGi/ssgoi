@@ -23,30 +23,30 @@ import { ScrollLayoutComponent, ScrollRoute } from './scroll-layout.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <app-browser-mockup [currentPath]="currentPath()">
-      <ssgoi [config]="ssgoiConfig">
-        <app-scroll-layout
-          [routes]="routes"
-          [currentPath]="currentPath()"
-          (navigate)="onNavigate($event)"
-        >
-          @for (page of [currentPath()]; track page) {
-            @switch (page) {
-              @case ('/scroll/intro') {
-                <app-scroll-demo-intro />
-              }
-              @case ('/scroll/features') {
-                <app-scroll-demo-features />
-              }
-              @case ('/scroll/usage') {
-                <app-scroll-demo-usage />
-              }
-              @case ('/scroll/examples') {
-                <app-scroll-demo-examples />
-              }
+      <app-scroll-layout
+        ssgoi
+        [config]="ssgoiConfig"
+        [routes]="routes"
+        [currentPath]="currentPath()"
+        (navigate)="onNavigate($event)"
+      >
+        @for (page of [currentPath()]; track page) {
+          @switch (page) {
+            @case ('/scroll/intro') {
+              <app-scroll-demo-intro />
+            }
+            @case ('/scroll/features') {
+              <app-scroll-demo-features />
+            }
+            @case ('/scroll/usage') {
+              <app-scroll-demo-usage />
+            }
+            @case ('/scroll/examples') {
+              <app-scroll-demo-examples />
             }
           }
-        </app-scroll-layout>
-      </ssgoi>
+        }
+      </app-scroll-layout>
     </app-browser-mockup>
   `,
 })

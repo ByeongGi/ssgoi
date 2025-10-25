@@ -19,7 +19,7 @@ interface ColorItem {
   imports: [RouterLink, SsgoiTransition],
   template: `
     @if (item(); as itemData) {
-      <ssgoi-transition [id]="'/item/' + id()">
+      <div [ssgoiTransition]="'/item/' + id()">
         <div
           class="min-h-screen flex flex-col items-center justify-center relative"
           [style.backgroundColor]="itemData.color"
@@ -71,7 +71,7 @@ interface ColorItem {
             </div>
           </div>
         </div>
-      </ssgoi-transition>
+      </div>
     } @else {
       <div
         class="min-h-screen flex items-center justify-center text-gray-200 text-xl"

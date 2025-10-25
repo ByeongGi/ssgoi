@@ -6,7 +6,7 @@ import { SsgoiTransition } from '@ssgoi/angular';
   selector: 'app-jaemin',
   imports: [RouterLink, SsgoiTransition],
   template: `
-    <ssgoi-transition id="/jaemin">
+    <div ssgoiTransition="/jaemin">
       <div
         class="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-300 text-white p-8"
       >
@@ -163,7 +163,7 @@ import { SsgoiTransition } from '@ssgoi/angular';
           </a>
         </div>
       </div>
-    </ssgoi-transition>
+    </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -6,11 +6,13 @@ import { fade, hero, jaemin } from '@ssgoi/angular/view-transitions';
   selector: 'app-layout',
   imports: [RouterOutlet, Ssgoi],
   template: `
-    <ssgoi [config]="ssgoiConfig" class="black">
-      <div class="relative min-h-screen w-full">
-        <router-outlet />
-      </div>
-    </ssgoi>
+    <div
+      ssgoi
+      [config]="ssgoiConfig"
+      class="black relative min-h-screen w-full"
+    >
+      <router-outlet />
+    </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

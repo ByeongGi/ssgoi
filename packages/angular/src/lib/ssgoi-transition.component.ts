@@ -1,7 +1,6 @@
 import {
-  Component,
+  Directive,
   input,
-  ChangeDetectionStrategy,
   OnInit,
   OnDestroy,
   AfterViewInit,
@@ -13,16 +12,13 @@ import { isPlatformBrowser } from "@angular/common";
 import { transition } from "@ssgoi/core";
 import { injectSsgoi } from "./context";
 
-@Component({
-  selector: "ssgoi-transition",
-  imports: [],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+@Directive({
+  selector: "[ssgoiTransition]",
   standalone: true,
-  template: `<ng-content />`,
 })
 export class SsgoiTransition implements OnInit, OnDestroy, AfterViewInit {
-  readonly id = input.required<string>();
-  readonly className = input<string>();
+  // The directive attribute value becomes the transition ID
+  readonly ssgoiTransition = input.required<string>();
 
   private readonly getTransition = injectSsgoi();
   private readonly el = inject(ElementRef<HTMLElement>);
@@ -35,13 +31,10 @@ export class SsgoiTransition implements OnInit, OnDestroy, AfterViewInit {
     }
 
     // Set data attribute on host element
-    this.el.nativeElement.setAttribute("data-ssgoi-transition", this.id());
-
-    // Apply className if provided
-    const className = this.className();
-    if (className) {
-      this.el.nativeElement.className = className;
-    }
+    this.el.nativeElement.setAttribute(
+      "data-ssgoi-transition",
+      this.ssgoiTransition(),
+    );
   }
 
   ngAfterViewInit(): void {
@@ -49,18 +42,10 @@ export class SsgoiTransition implements OnInit, OnDestroy, AfterViewInit {
       return;
     }
 
-    // Get the first child element as the transition target
-    const targetElement = this.el.nativeElement
-      .firstElementChild as HTMLElement;
+    // Use the host element itself as the transition target
+    const targetElement = this.el.nativeElement;
 
-    if (!targetElement) {
-      console.warn(
-        `[SSGOI] No child element found for transition id: ${this.id()}`,
-      );
-      return;
-    }
-
-    const transitionConfig = this.getTransition(this.id());
+    const transitionConfig = this.getTransition(this.ssgoiTransition());
     const cleanupResult = transition(transitionConfig)(targetElement);
 
     if (cleanupResult) {

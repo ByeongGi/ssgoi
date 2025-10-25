@@ -7,7 +7,7 @@ import { SsgoiTransition } from '@ssgoi/angular';
   imports: [CommonModule, SsgoiTransition],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <ssgoi-transition id="/fade/start">
+    <div ssgoiTransition="/fade/start">
       <div
         class="min-h-full bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100 p-8"
       >
@@ -69,7 +69,7 @@ import { SsgoiTransition } from '@ssgoi/angular';
           </div>
         </div>
 
-    </ssgoi-transition>
+    </div>
   `,
 })
 export class FadeDemoStartComponent {
@@ -90,9 +90,9 @@ export const appConfig: ApplicationConfig = {
   selector: 'app-home',
   imports: [SsgoiTransition],
   template: \`
-    <ssgoi-transition id="/">
+    <div ssgoiTransition="/">
       <h1>Welcome</h1>
-    </ssgoi-transition>
+    </div>
   \`
 })
 export class HomeComponent {}`;

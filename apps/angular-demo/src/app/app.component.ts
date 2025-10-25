@@ -12,11 +12,13 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
   template: `
     <app-sidebar />
     <div class="ml-64">
-      <ssgoi [config]="ssgoiConfig">
-        <main class="relative min-h-screen w-full text-gray-100">
-          <router-outlet />
-        </main>
-      </ssgoi>
+      <main
+        ssgoi
+        [config]="ssgoiConfig"
+        class="relative min-h-screen w-full text-gray-100"
+      >
+        <router-outlet />
+      </main>
     </div>
   `,
   styles: [],

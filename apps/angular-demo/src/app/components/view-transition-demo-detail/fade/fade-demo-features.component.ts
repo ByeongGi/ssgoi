@@ -7,7 +7,7 @@ import { SsgoiTransition } from '@ssgoi/angular';
   imports: [CommonModule, SsgoiTransition],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <ssgoi-transition id="/fade/features">
+    <div ssgoiTransition="/fade/features">
       <div
         class="min-h-full bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100 p-8"
       >
@@ -59,7 +59,7 @@ import { SsgoiTransition } from '@ssgoi/angular';
           </div>
         </div>
       </div>
-    </ssgoi-transition>
+    </div>
   `,
 })
 export class FadeDemoFeaturesComponent {

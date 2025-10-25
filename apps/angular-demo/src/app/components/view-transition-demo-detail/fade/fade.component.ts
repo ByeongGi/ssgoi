@@ -26,32 +26,32 @@ import { FadeDemoStartComponent } from './fade-demo-start.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <app-browser-mockup [currentPath]="currentPath()">
-      <ssgoi [config]="ssgoiConfig">
-        <app-demo-layout
-          [logo]="'⚡'"
-          [title]="'Fade Demo'"
-          [routes]="routes"
-          [currentPath]="currentPath()"
-          (navigate)="onNavigate($event)"
-        >
-          @for (page of [currentPath()]; track page) {
-            @switch (page) {
-              @case ('/fade') {
-                <app-fade-demo-home (navigate)="onNavigate($event)" />
-              }
-              @case ('/fade/features') {
-                <app-fade-demo-features />
-              }
-              @case ('/fade/examples') {
-                <app-fade-demo-examples />
-              }
-              @case ('/fade/start') {
-                <app-fade-demo-start />
-              }
+      <app-demo-layout
+        ssgoi
+        [config]="ssgoiConfig"
+        [logo]="'⚡'"
+        [title]="'Fade Demo'"
+        [routes]="routes"
+        [currentPath]="currentPath()"
+        (navigate)="onNavigate($event)"
+      >
+        @for (page of [currentPath()]; track page) {
+          @switch (page) {
+            @case ('/fade') {
+              <app-fade-demo-home (navigate)="onNavigate($event)" />
+            }
+            @case ('/fade/features') {
+              <app-fade-demo-features />
+            }
+            @case ('/fade/examples') {
+              <app-fade-demo-examples />
+            }
+            @case ('/fade/start') {
+              <app-fade-demo-start />
             }
           }
-        </app-demo-layout>
-      </ssgoi>
+        }
+      </app-demo-layout>
     </app-browser-mockup>
   `,
 })

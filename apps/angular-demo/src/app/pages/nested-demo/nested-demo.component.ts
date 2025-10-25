@@ -9,7 +9,7 @@ import type { SsgoiConfig } from '@ssgoi/angular';
   standalone: true,
   imports: [Ssgoi, SsgoiTransition, RouterLink],
   template: `
-    <ssgoi-transition id="/nested-demo">
+    <div ssgoiTransition="/nested-demo">
       <div class="min-h-screen bg-gray-950 text-gray-100 p-8">
         <div class="max-w-6xl mx-auto">
           <!-- Header -->
@@ -69,8 +69,8 @@ import type { SsgoiConfig } from '@ssgoi/angular';
               the outer page.
             </p>
 
-            <!-- Nested <ssgoi> Component -->
-            <ssgoi [config]="innerConfig">
+            <!-- Nested ssgoi directive -->
+            <div ssgoi [config]="innerConfig">
               <div
                 class="bg-gray-800 border border-gray-700 rounded-lg overflow-hidden"
               >
@@ -107,7 +107,7 @@ import type { SsgoiConfig } from '@ssgoi/angular';
                 >
                   @for (page of [currentPage()]; track page) {
                     @if (page === 'page1') {
-                      <ssgoi-transition id="/inner/page1">
+                      <div ssgoiTransition="/inner/page1">
                         <div
                           class="p-8 bg-gradient-to-br from-blue-900 to-blue-800"
                           style="min-height: 300px"
@@ -125,10 +125,10 @@ import type { SsgoiConfig } from '@ssgoi/angular';
                             </p>
                           </div>
                         </div>
-                      </ssgoi-transition>
+                      </div>
                     }
                     @if (page === 'page2') {
-                      <ssgoi-transition id="/inner/page2">
+                      <div ssgoiTransition="/inner/page2">
                         <div
                           class="p-8 bg-gradient-to-br from-purple-900 to-purple-800"
                           style="min-height: 300px"
@@ -147,12 +147,12 @@ import type { SsgoiConfig } from '@ssgoi/angular';
                             </p>
                           </div>
                         </div>
-                      </ssgoi-transition>
+                      </div>
                     }
                   }
                 </div>
               </div>
-            </ssgoi>
+            </div>
           </div>
 
           <!-- Expected Behavior -->
@@ -231,7 +231,7 @@ import type { SsgoiConfig } from '@ssgoi/angular';
           </div>
         </div>
       </div>
-    </ssgoi-transition>
+    </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

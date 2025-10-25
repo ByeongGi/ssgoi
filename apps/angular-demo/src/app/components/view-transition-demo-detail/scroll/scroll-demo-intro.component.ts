@@ -7,7 +7,7 @@ import { SsgoiTransition } from '@ssgoi/angular';
   imports: [CommonModule, SsgoiTransition],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <ssgoi-transition id="/scroll/intro">
+    <div ssgoiTransition="/scroll/intro">
       <div class="bg-gray-900 min-h-full overflow-y-auto">
         <div class="p-4 md:p-8 max-w-3xl mx-auto">
           <div class="mb-3 md:mb-6 text-2xl md:text-4xl">📝</div>
@@ -72,7 +72,7 @@ import { SsgoiTransition } from '@ssgoi/angular';
           </div>
         </div>
       </div>
-    </ssgoi-transition>
+    </div>
   `,
 })
 export class ScrollDemoIntroComponent {

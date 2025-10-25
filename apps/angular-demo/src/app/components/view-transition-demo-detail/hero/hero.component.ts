@@ -26,23 +26,23 @@ import { HeroGalleryDetailComponent } from './hero-gallery-detail.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <app-browser-mockup [currentPath]="currentPath()">
-      <ssgoi [config]="ssgoiConfig">
+      <div ssgoi [config]="ssgoiConfig">
         @if (currentPath() === '/hero/gallery') {
-          <ssgoi-transition id="/hero/gallery" class="min-h-full">
+          <div ssgoiTransition="/hero/gallery" class="min-h-full">
             <app-hero-gallery-list (navigate)="onNavigate($event)" />
-          </ssgoi-transition>
+          </div>
         } @else if (currentItem(); as item) {
-          <ssgoi-transition
-            [id]="'/hero/gallery/' + item.id"
+          <div
+            [ssgoiTransition]="'/hero/gallery/' + item.id"
             class="min-h-full"
           >
             <app-hero-gallery-detail
               [item]="item"
               (navigate)="onNavigate($event)"
             />
-          </ssgoi-transition>
+          </div>
         }
-      </ssgoi>
+      </div>
     </app-browser-mockup>
   `,
 })

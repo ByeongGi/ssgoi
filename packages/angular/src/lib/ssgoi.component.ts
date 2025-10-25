@@ -1,7 +1,6 @@
 import {
-  Component,
+  Directive,
   input,
-  ChangeDetectionStrategy,
   forwardRef,
   PLATFORM_ID,
   inject,
@@ -22,10 +21,8 @@ function createSsgoiContext(component: Ssgoi): SsgoiContext | undefined {
   return createSggoiTransitionContext(component.config());
 }
 
-@Component({
-  selector: "ssgoi",
-  template: "<ng-content />",
-  changeDetection: ChangeDetectionStrategy.OnPush,
+@Directive({
+  selector: "[ssgoi]",
   standalone: true,
   providers: [
     {
