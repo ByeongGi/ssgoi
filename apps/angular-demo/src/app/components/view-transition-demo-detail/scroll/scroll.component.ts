@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { Ssgoi, SsgoiConfig } from '@ssgoi/angular';
+import { CommonModule } from '@angular/common';
+import { Ssgoi, SsgoiConfig, SsgoiTransition } from '@ssgoi/angular';
 import { scroll } from '@ssgoi/angular/view-transitions';
 import { BrowserMockupComponent } from '../shared/browser-mockup.component';
 import { ScrollDemoExamplesComponent } from './scroll-demo-examples.component';
@@ -8,11 +9,22 @@ import { ScrollDemoIntroComponent } from './scroll-demo-intro.component';
 import { ScrollDemoUsageComponent } from './scroll-demo-usage.component';
 import { ScrollLayoutComponent, ScrollRoute } from './scroll-layout.component';
 
+const SCROLL_ROUTES = {
+  INTRO: '/scroll/intro',
+  FEATURES: '/scroll/features',
+  USAGE: '/scroll/usage',
+  EXAMPLES: '/scroll/examples',
+} as const;
+
+type ScrollRoutePath = (typeof SCROLL_ROUTES)[keyof typeof SCROLL_ROUTES];
+
 // Main Scroll Demo Component
 @Component({
   selector: 'app-scroll-demo',
   imports: [
+    CommonModule,
     Ssgoi,
+    SsgoiTransition,
     ScrollLayoutComponent,
     BrowserMockupComponent,
     ScrollDemoIntroComponent,
@@ -30,20 +42,26 @@ import { ScrollLayoutComponent, ScrollRoute } from './scroll-layout.component';
         [currentPath]="currentPath()"
         (navigate)="onNavigate($event)"
       >
-        @for (page of [currentPath()]; track page) {
-          @switch (page) {
-            @case ('/scroll/intro') {
+        @switch (currentPath()) {
+          @case (ROUTES.INTRO) {
+            <div [ssgoiTransition]="ROUTES.INTRO" class="h-full">
               <app-scroll-demo-intro />
-            }
-            @case ('/scroll/features') {
+            </div>
+          }
+          @case (ROUTES.FEATURES) {
+            <div [ssgoiTransition]="ROUTES.FEATURES" class="h-full">
               <app-scroll-demo-features />
-            }
-            @case ('/scroll/usage') {
+            </div>
+          }
+          @case (ROUTES.USAGE) {
+            <div [ssgoiTransition]="ROUTES.USAGE" class="h-full">
               <app-scroll-demo-usage />
-            }
-            @case ('/scroll/examples') {
+            </div>
+          }
+          @case (ROUTES.EXAMPLES) {
+            <div [ssgoiTransition]="ROUTES.EXAMPLES" class="h-full">
               <app-scroll-demo-examples />
-            }
+            </div>
           }
         }
       </app-scroll-layout>
@@ -51,14 +69,25 @@ import { ScrollLayoutComponent, ScrollRoute } from './scroll-layout.component';
   `,
 })
 export class ScrollDemoComponent {
-  readonly routes: ScrollRoute[] = [
-    { path: '/scroll/intro', label: 'Introduction' },
-    { path: '/scroll/features', label: 'Features' },
-    { path: '/scroll/usage', label: 'Usage' },
-    { path: '/scroll/examples', label: 'Examples' },
+  protected readonly ROUTES = SCROLL_ROUTES;
+
+  private readonly routeOrder: ScrollRoutePath[] = [
+    this.ROUTES.INTRO,
+    this.ROUTES.FEATURES,
+    this.ROUTES.USAGE,
+    this.ROUTES.EXAMPLES,
   ];
 
-  ssgoiConfig: SsgoiConfig = {
+  currentPath = signal<ScrollRoutePath>(this.ROUTES.INTRO);
+
+  readonly routes: ScrollRoute[] = [
+    { path: this.ROUTES.INTRO, label: 'Introduction' },
+    { path: this.ROUTES.FEATURES, label: 'Features' },
+    { path: this.ROUTES.USAGE, label: 'Usage' },
+    { path: this.ROUTES.EXAMPLES, label: 'Examples' },
+  ];
+
+  readonly ssgoiConfig: SsgoiConfig = {
     transitions: [
       {
         from: '/nav/previous',
@@ -76,32 +105,32 @@ export class ScrollDemoComponent {
       },
     ],
     middleware: (from: string, to: string) => {
-      const routeOrder = this.routes.map((r) => r.path);
-      const fromIndex = routeOrder.indexOf(from);
-      const toIndex = routeOrder.indexOf(to);
-
-      if (fromIndex !== -1 && toIndex !== -1) {
-        if (fromIndex < toIndex) {
-          // Going forward (down the list)
-          return { from: '/nav/previous', to: '/nav/next' };
-        } else {
-          // Going backward (up the list)
-          return { from: '/nav/next', to: '/nav/previous' };
-        }
-      }
-
-      return { from, to };
+      return this.mapNavigationDirection(from, to);
     },
   };
 
-  currentPath = signal('/scroll/intro');
-
-  // Arrow function to avoid .bind(this)
-  navigateTo = (path: string) => {
-    this.currentPath.set(path);
-  };
-
   onNavigate(path: string) {
-    this.currentPath.set(path);
+    if (this.isScrollRoutePath(path)) {
+      this.currentPath.set(path);
+    }
+  }
+
+  private mapNavigationDirection(from: string, to: string) {
+    if (this.isScrollRoutePath(from) && this.isScrollRoutePath(to)) {
+      const fromIndex = this.routeOrder.indexOf(from);
+      const toIndex = this.routeOrder.indexOf(to);
+
+      if (fromIndex !== -1 && toIndex !== -1) {
+        return fromIndex < toIndex
+          ? { from: '/nav/previous', to: '/nav/next' }
+          : { from: '/nav/next', to: '/nav/previous' };
+      }
+    }
+
+    return { from, to };
+  }
+
+  private isScrollRoutePath(path: string): path is ScrollRoutePath {
+    return this.routeOrder.includes(path as ScrollRoutePath);
   }
 }
