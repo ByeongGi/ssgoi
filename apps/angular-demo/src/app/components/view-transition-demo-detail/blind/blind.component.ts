@@ -44,28 +44,26 @@ const BLIND_PATHS = {
         [currentPath]="currentPath()"
         (navigate)="onNavigate($event)"
       >
-        @for (page of [currentPath()]; track page) {
-          @switch (page) {
-            @case (paths.theater) {
-              <div [ssgoiTransition]="paths.theater" class="h-full">
-                <app-blind-demo-theater />
-              </div>
-            }
-            @case (paths.act1) {
-              <div [ssgoiTransition]="paths.act1" class="h-full">
-                <app-blind-demo-act1 />
-              </div>
-            }
-            @case (paths.act2) {
-              <div [ssgoiTransition]="paths.act2" class="h-full">
-                <app-blind-demo-act2 />
-              </div>
-            }
-            @case (paths.finale) {
-              <div [ssgoiTransition]="paths.finale" class="h-full">
-                <app-blind-demo-finale />
-              </div>
-            }
+        @switch (currentPath()) {
+          @case (paths.theater) {
+            <div [ssgoiTransition]="paths.theater" class="h-full">
+              <app-blind-demo-theater />
+            </div>
+          }
+          @case (paths.act1) {
+            <div [ssgoiTransition]="paths.act1" class="h-full">
+              <app-blind-demo-act1 />
+            </div>
+          }
+          @case (paths.act2) {
+            <div [ssgoiTransition]="paths.act2" class="h-full">
+              <app-blind-demo-act2 />
+            </div>
+          }
+          @case (paths.finale) {
+            <div [ssgoiTransition]="paths.finale" class="h-full">
+              <app-blind-demo-finale />
+            </div>
           }
         }
       </app-blind-layout>

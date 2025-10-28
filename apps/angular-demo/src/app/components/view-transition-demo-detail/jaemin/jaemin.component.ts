@@ -41,35 +41,33 @@ const JAEMIN_PATHS = {
         [currentPath]="currentPath()"
         (navigate)="onNavigate($event)"
       >
-        @for (page of [currentPath()]; track page) {
-          @switch (page) {
-            @case (paths.home) {
-              <div
-                [ssgoiTransition]="paths.home"
-                class="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 min-h-full"
-              >
-                <app-jaemin-home />
-              </div>
-            }
-            @case (paths.premium) {
-              <div
-                [ssgoiTransition]="paths.premium"
-                class="bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-900 min-h-full"
-              >
-                <app-jaemin-premium />
-              </div>
-            }
-            @case (paths.achievement) {
-              <div
-                [ssgoiTransition]="paths.achievement"
-                class="bg-gradient-to-br from-slate-900 via-emerald-900 to-slate-900 min-h-full"
-              >
-                <app-jaemin-achievement />
-              </div>
-            }
-            @case (paths.settings) {
-              <app-jaemin-settings />
-            }
+        @switch (currentPath()) {
+          @case (paths.home) {
+            <div
+              [ssgoiTransition]="paths.home"
+              class="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 min-h-full"
+            >
+              <app-jaemin-home />
+            </div>
+          }
+          @case (paths.premium) {
+            <div
+              [ssgoiTransition]="paths.premium"
+              class="bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-900 min-h-full"
+            >
+              <app-jaemin-premium />
+            </div>
+          }
+          @case (paths.achievement) {
+            <div
+              [ssgoiTransition]="paths.achievement"
+              class="bg-gradient-to-br from-slate-900 via-emerald-900 to-slate-900 min-h-full"
+            >
+              <app-jaemin-achievement />
+            </div>
+          }
+          @case (paths.settings) {
+            <app-jaemin-settings />
           }
         }
       </app-jaemin-layout>

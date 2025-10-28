@@ -43,40 +43,38 @@ const FADE_PATHS = {
         [currentPath]="currentPath()"
         (navigate)="onNavigate($event)"
       >
-        @for (page of [currentPath()]; track page) {
-          @switch (page) {
-            @case (paths.home) {
-              <div
-                [ssgoiTransition]="paths.home"
-                class="min-h-full bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100 p-8"
-              >
-                <app-fade-demo-home (navigate)="onNavigate($event)" />
-              </div>
-            }
-            @case (paths.features) {
-              <div
-                [ssgoiTransition]="paths.features"
-                class="min-h-full bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100 p-8"
-              >
-                <app-fade-demo-features />
-              </div>
-            }
-            @case (paths.examples) {
-              <div
-                [ssgoiTransition]="paths.examples"
-                class="min-h-full bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100 p-8"
-              >
-                <app-fade-demo-examples />
-              </div>
-            }
-            @case (paths.start) {
-              <div
-                [ssgoiTransition]="paths.start"
-                class="min-h-full bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100 p-8"
-              >
-                <app-fade-demo-start />
-              </div>
-            }
+        @switch (currentPath()) {
+          @case (paths.home) {
+            <div
+              [ssgoiTransition]="paths.home"
+              class="min-h-full bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100 p-8"
+            >
+              <app-fade-demo-home (navigate)="onNavigate($event)" />
+            </div>
+          }
+          @case (paths.features) {
+            <div
+              [ssgoiTransition]="paths.features"
+              class="min-h-full bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100 p-8"
+            >
+              <app-fade-demo-features />
+            </div>
+          }
+          @case (paths.examples) {
+            <div
+              [ssgoiTransition]="paths.examples"
+              class="min-h-full bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100 p-8"
+            >
+              <app-fade-demo-examples />
+            </div>
+          }
+          @case (paths.start) {
+            <div
+              [ssgoiTransition]="paths.start"
+              class="min-h-full bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100 p-8"
+            >
+              <app-fade-demo-start />
+            </div>
           }
         }
       </app-demo-layout>
