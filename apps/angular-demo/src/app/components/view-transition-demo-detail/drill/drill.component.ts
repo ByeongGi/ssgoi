@@ -13,6 +13,13 @@ import {
 } from './drill-posts-list.component';
 import { DrillPostDetailComponent } from './drill-post-detail.component';
 
+const DRILL_ROUTES = {
+  LIST: '/posts',
+} as const;
+
+const DRILL_ROUTE_WILDCARD = `${DRILL_ROUTES.LIST}/*`;
+const DRILL_DETAIL_PREFIX = `${DRILL_ROUTES.LIST}/`;
+
 // Main Drill Demo Component
 @Component({
   selector: 'app-drill-demo',
@@ -29,12 +36,12 @@ import { DrillPostDetailComponent } from './drill-post-detail.component';
       <div class="bg-gray-950 min-h-full">
         <div class="max-w-md mx-auto overflow-hidden">
           <div class="relative z-0 w-full" ssgoi [config]="ssgoiConfig">
-            @if (currentPath() === '/posts') {
-              <div ssgoiTransition="/posts" class="min-h-full">
+            @if (currentPath() === ROUTES.LIST) {
+              <div [ssgoiTransition]="ROUTES.LIST" class="min-h-full">
                 <app-drill-posts-list (navigate)="onNavigate($event)" />
               </div>
             } @else if (currentPost(); as post) {
-              <div [ssgoiTransition]="'/posts/' + post.id" class="min-h-full">
+              <div [ssgoiTransition]="detailPath(post.id)" class="min-h-full">
                 <app-drill-post-detail
                   [post]="post"
                   (navigate)="onNavigate($event)"
@@ -48,17 +55,18 @@ import { DrillPostDetailComponent } from './drill-post-detail.component';
   `,
 })
 export class DrillDemoComponent {
-  currentPath = signal('/posts');
+  protected readonly ROUTES = DRILL_ROUTES;
+  currentPath = signal<string>(DRILL_ROUTES.LIST);
   readonly ssgoiConfig = {
     transitions: [
       {
-        from: '/posts',
-        to: '/posts/*',
+        from: DRILL_ROUTES.LIST,
+        to: DRILL_ROUTE_WILDCARD,
         transition: drill({ direction: 'enter' }),
       },
       {
-        from: '/posts/*',
-        to: '/posts',
+        from: DRILL_ROUTE_WILDCARD,
+        to: DRILL_ROUTES.LIST,
         transition: drill({ direction: 'exit' }),
       },
     ],
@@ -68,11 +76,19 @@ export class DrillDemoComponent {
   // Computed signal to get current post based on path
   currentPost = computed(() => {
     const path = this.currentPath();
-    const postId = path.replace('/posts/', '');
+    if (!path.startsWith(DRILL_DETAIL_PREFIX)) {
+      return undefined;
+    }
+
+    const postId = path.slice(DRILL_DETAIL_PREFIX.length);
     return this.blogPosts.find((post) => post.id === postId);
   });
 
   onNavigate(path: string) {
     this.currentPath.set(path);
+  }
+
+  detailPath(id: string) {
+    return `${DRILL_DETAIL_PREFIX}${id}`;
   }
 }
