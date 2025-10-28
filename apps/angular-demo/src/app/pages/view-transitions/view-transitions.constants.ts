@@ -42,12 +42,6 @@ export const viewTransitionDemos = [
     tags: ['Creative', 'Strips'],
   },
   {
-    id: 'film',
-    name: 'Film',
-    description: 'Film strip style transition',
-    tags: ['Retro', 'Strips'],
-  },
-  {
     id: 'jaemin',
     name: 'Jaemin',
     description: 'Tunnel emergence animation',
