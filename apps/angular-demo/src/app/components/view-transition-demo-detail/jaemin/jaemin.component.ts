@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { Ssgoi } from '@ssgoi/angular';
+import { Ssgoi, SsgoiTransition } from '@ssgoi/angular';
 import { jaemin } from '@ssgoi/angular/view-transitions';
 import { BrowserMockupComponent } from '../shared/browser-mockup.component';
 import {
@@ -18,6 +18,7 @@ import { JaeminSettingsComponent } from './jaemin-settings.component';
     BrowserMockupComponent,
     JaeminLayoutComponent,
     Ssgoi,
+    SsgoiTransition,
     JaeminHomeComponent,
     JaeminPremiumComponent,
     JaeminAchievementComponent,
@@ -36,13 +37,28 @@ import { JaeminSettingsComponent } from './jaemin-settings.component';
         @for (page of [currentPath()]; track page) {
           @switch (page) {
             @case ('/jaemin') {
-              <app-jaemin-home />
+              <div
+                ssgoiTransition="/jaemin"
+                class="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 min-h-full"
+              >
+                <app-jaemin-home />
+              </div>
             }
             @case ('/jaemin/premium') {
-              <app-jaemin-premium />
+              <div
+                ssgoiTransition="/jaemin/premium"
+                class="bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-900 min-h-full"
+              >
+                <app-jaemin-premium />
+              </div>
             }
             @case ('/jaemin/achievement') {
-              <app-jaemin-achievement />
+              <div
+                ssgoiTransition="/jaemin/achievement"
+                class="bg-gradient-to-br from-slate-900 via-emerald-900 to-slate-900 min-h-full"
+              >
+                <app-jaemin-achievement />
+              </div>
             }
             @case ('/jaemin/settings') {
               <app-jaemin-settings />
