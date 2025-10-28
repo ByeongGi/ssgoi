@@ -98,6 +98,13 @@ export const routes: Routes = [
             './components/view-transition-demo-detail/jaemin/jaemin.component'
           ).then((m) => m.JaeminDemoComponent),
       },
+      {
+        path: 'strip',
+        loadComponent: () =>
+          import(
+            './components/view-transition-demo-detail/strip/strip.component'
+          ).then((m) => m.StripDemoComponent),
+      },
     ],
   },
 

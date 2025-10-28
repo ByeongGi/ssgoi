@@ -53,4 +53,10 @@ export const viewTransitionDemos = [
     description: 'Tunnel emergence animation',
     tags: ['3D', 'Perspective'],
   },
+  {
+    id: 'strip',
+    name: 'Strip',
+    description: 'Vertical strip transition effect',
+    tags: ['Creative', 'Strips'],
+  },
 ];
