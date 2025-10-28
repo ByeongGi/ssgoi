@@ -13,6 +13,12 @@ import {
 } from './hero-gallery-list.component';
 import { HeroGalleryDetailComponent } from './hero-gallery-detail.component';
 
+const HERO_ROUTES = {
+  GALLERY: '/hero/gallery',
+} as const;
+
+const HERO_DETAIL_PREFIX = `${HERO_ROUTES.GALLERY}/`;
+
 // Main Hero Demo Component
 @Component({
   selector: 'app-hero-demo',
@@ -27,15 +33,12 @@ import { HeroGalleryDetailComponent } from './hero-gallery-detail.component';
   template: `
     <app-browser-mockup [currentPath]="currentPath()">
       <div ssgoi [config]="ssgoiConfig">
-        @if (currentPath() === '/hero/gallery') {
-          <div ssgoiTransition="/hero/gallery" class="min-h-full">
+        @if (currentPath() === ROUTES.GALLERY) {
+          <div [ssgoiTransition]="ROUTES.GALLERY" class="min-h-full">
             <app-hero-gallery-list (navigate)="onNavigate($event)" />
           </div>
         } @else if (currentItem(); as item) {
-          <div
-            [ssgoiTransition]="'/hero/gallery/' + item.id"
-            class="min-h-full"
-          >
+          <div [ssgoiTransition]="detailPath(item.id)" class="min-h-full">
             <app-hero-gallery-detail
               [item]="item"
               (navigate)="onNavigate($event)"
@@ -47,7 +50,8 @@ import { HeroGalleryDetailComponent } from './hero-gallery-detail.component';
   `,
 })
 export class HeroDemoComponent {
-  currentPath = signal('/hero/gallery');
+  protected readonly ROUTES = HERO_ROUTES;
+  currentPath = signal<string>(HERO_ROUTES.GALLERY);
   readonly ssgoiConfig = {
     defaultTransition: hero(),
   };
@@ -56,11 +60,19 @@ export class HeroDemoComponent {
   // Computed signal to get current item based on path
   currentItem = computed(() => {
     const path = this.currentPath();
-    const itemId = path.replace('/hero/gallery/', '');
+    if (!path.startsWith(HERO_DETAIL_PREFIX)) {
+      return undefined;
+    }
+
+    const itemId = path.slice(HERO_DETAIL_PREFIX.length);
     return this.galleryItems.find((item) => item.id === itemId);
   });
 
   onNavigate(path: string) {
     this.currentPath.set(path);
+  }
+
+  detailPath(id: string) {
+    return `${HERO_DETAIL_PREFIX}${id}`;
   }
 }
