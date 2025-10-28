@@ -11,6 +11,13 @@ import { JaeminPremiumComponent } from './jaemin-premium.component';
 import { JaeminAchievementComponent } from './jaemin-achievement.component';
 import { JaeminSettingsComponent } from './jaemin-settings.component';
 
+const JAEMIN_PATHS = {
+  home: '/jaemin' as string,
+  premium: '/jaemin/premium' as string,
+  achievement: '/jaemin/achievement' as string,
+  settings: '/jaemin/settings' as string,
+} as const;
+
 // Main Jaemin Demo Component
 @Component({
   selector: 'app-jaemin-demo',
@@ -36,31 +43,31 @@ import { JaeminSettingsComponent } from './jaemin-settings.component';
       >
         @for (page of [currentPath()]; track page) {
           @switch (page) {
-            @case ('/jaemin') {
+            @case (paths.home) {
               <div
-                ssgoiTransition="/jaemin"
+                [ssgoiTransition]="paths.home"
                 class="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 min-h-full"
               >
                 <app-jaemin-home />
               </div>
             }
-            @case ('/jaemin/premium') {
+            @case (paths.premium) {
               <div
-                ssgoiTransition="/jaemin/premium"
+                [ssgoiTransition]="paths.premium"
                 class="bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-900 min-h-full"
               >
                 <app-jaemin-premium />
               </div>
             }
-            @case ('/jaemin/achievement') {
+            @case (paths.achievement) {
               <div
-                ssgoiTransition="/jaemin/achievement"
+                [ssgoiTransition]="paths.achievement"
                 class="bg-gradient-to-br from-slate-900 via-emerald-900 to-slate-900 min-h-full"
               >
                 <app-jaemin-achievement />
               </div>
             }
-            @case ('/jaemin/settings') {
+            @case (paths.settings) {
               <app-jaemin-settings />
             }
           }
@@ -70,31 +77,33 @@ import { JaeminSettingsComponent } from './jaemin-settings.component';
   `,
 })
 export class JaeminDemoComponent {
-  currentPath = signal('/jaemin');
+  readonly paths = JAEMIN_PATHS;
+
+  currentPath = signal(JAEMIN_PATHS.home);
   readonly routes: JaeminRoute[] = [
-    { path: '/jaemin', label: 'Home' },
-    { path: '/jaemin/premium', label: 'Premium' },
-    { path: '/jaemin/achievement', label: 'Achievement' },
-    { path: '/jaemin/settings', label: 'Settings' },
+    { path: JAEMIN_PATHS.home, label: 'Home' },
+    { path: JAEMIN_PATHS.premium, label: 'Premium' },
+    { path: JAEMIN_PATHS.achievement, label: 'Achievement' },
+    { path: JAEMIN_PATHS.settings, label: 'Settings' },
   ];
   readonly ssgoiConfig = {
     transitions: [
       // Use jaemin transition for all special pages (excluding settings)
       {
-        from: '/jaemin',
-        to: '/jaemin/premium',
+        from: JAEMIN_PATHS.home,
+        to: JAEMIN_PATHS.premium,
         transition: jaemin({ containerMode: 'positioned-parent' } as any),
         symmetric: true,
       },
       {
-        from: '/jaemin',
-        to: '/jaemin/achievement',
+        from: JAEMIN_PATHS.home,
+        to: JAEMIN_PATHS.achievement,
         transition: jaemin({ containerMode: 'positioned-parent' } as any),
         symmetric: true,
       },
       {
-        from: '/jaemin/premium',
-        to: '/jaemin/achievement',
+        from: JAEMIN_PATHS.premium,
+        to: JAEMIN_PATHS.achievement,
         transition: jaemin({ containerMode: 'positioned-parent' } as any),
         symmetric: true,
       },
