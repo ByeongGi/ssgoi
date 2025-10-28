@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { Ssgoi, SsgoiConfig } from '@ssgoi/angular';
+import { CommonModule } from '@angular/common';
+import { Ssgoi, SsgoiConfig, SsgoiTransition } from '@ssgoi/angular';
 import { slide } from '@ssgoi/angular/view-transitions';
 import { BrowserMockupComponent } from '../shared/browser-mockup.component';
 import { SlideDemoClothingComponent } from './slide-demo-clothing.component';
@@ -11,7 +12,9 @@ import { SlideLayoutComponent, SlideRoute } from './slide-layout.component';
 @Component({
   selector: 'app-slide-demo',
   imports: [
+    CommonModule,
     Ssgoi,
+    SsgoiTransition,
     SlideLayoutComponent,
     BrowserMockupComponent,
     SlideDemoClothingComponent,
@@ -28,17 +31,21 @@ import { SlideLayoutComponent, SlideRoute } from './slide-layout.component';
         [currentPath]="currentPath()"
         (navigate)="onNavigate($event)"
       >
-        @for (page of [currentPath()]; track page) {
-          @switch (page) {
-            @case ('/slide/clothing') {
+        @switch (currentPath()) {
+          @case (ROUTES.CLOTHING) {
+            <div [ssgoiTransition]="ROUTES.CLOTHING" class="h-full bg-white">
               <app-slide-demo-clothing />
-            }
-            @case ('/slide/shoes') {
+            </div>
+          }
+          @case (ROUTES.SHOES) {
+            <div [ssgoiTransition]="ROUTES.SHOES" class="h-full bg-white">
               <app-slide-demo-shoes />
-            }
-            @case ('/slide/accessories') {
+            </div>
+          }
+          @case (ROUTES.ACCESSORIES) {
+            <div [ssgoiTransition]="ROUTES.ACCESSORIES" class="h-full bg-white">
               <app-slide-demo-accessories />
-            }
+            </div>
           }
         }
       </app-slide-layout>
@@ -46,13 +53,27 @@ import { SlideLayoutComponent, SlideRoute } from './slide-layout.component';
   `,
 })
 export class SlideDemoComponent {
-  readonly routes: SlideRoute[] = [
-    { path: '/slide/clothing', label: 'Clothing' },
-    { path: '/slide/shoes', label: 'Shoes' },
-    { path: '/slide/accessories', label: 'Accessories' },
+  protected readonly ROUTES = {
+    CLOTHING: '/slide/clothing' as string,
+    SHOES: '/slide/shoes' as string,
+    ACCESSORIES: '/slide/accessories' as string,
+  };
+
+  private readonly routeOrder = [
+    this.ROUTES.CLOTHING,
+    this.ROUTES.SHOES,
+    this.ROUTES.ACCESSORIES,
   ];
 
-  ssgoiConfig: SsgoiConfig = {
+  currentPath = signal(this.ROUTES.CLOTHING);
+
+  readonly routes: SlideRoute[] = [
+    { path: this.ROUTES.CLOTHING, label: 'Clothing' },
+    { path: this.ROUTES.SHOES, label: 'Shoes' },
+    { path: this.ROUTES.ACCESSORIES, label: 'Accessories' },
+  ];
+
+  readonly ssgoiConfig: SsgoiConfig = {
     transitions: [
       {
         from: '/nav/left',
@@ -70,27 +91,24 @@ export class SlideDemoComponent {
       },
     ],
     middleware: (from: string, to: string) => {
-      const routeOrder = this.routes.map((r) => r.path);
-      const fromIndex = routeOrder.indexOf(from);
-      const toIndex = routeOrder.indexOf(to);
-
-      if (fromIndex !== -1 && toIndex !== -1) {
-        if (fromIndex < toIndex) {
-          // Going right (forward in tab order)
-          return { from: '/nav/left', to: '/nav/right' };
-        } else {
-          // Going left (backward in tab order)
-          return { from: '/nav/right', to: '/nav/left' };
-        }
-      }
-
-      return { from, to };
+      return this.mapNavigationDirection(from, to);
     },
   };
 
-  currentPath = signal('/slide/clothing');
-
   onNavigate(path: string) {
     this.currentPath.set(path);
+  }
+
+  private mapNavigationDirection(from: string, to: string) {
+    const fromIndex = this.routeOrder.indexOf(from);
+    const toIndex = this.routeOrder.indexOf(to);
+
+    if (fromIndex !== -1 && toIndex !== -1) {
+      return fromIndex < toIndex
+        ? { from: '/nav/left', to: '/nav/right' }
+        : { from: '/nav/right', to: '/nav/left' };
+    }
+
+    return { from, to };
   }
 }

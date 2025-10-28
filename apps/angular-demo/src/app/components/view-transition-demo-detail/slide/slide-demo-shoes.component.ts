@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { SsgoiTransition } from '@ssgoi/angular';
 
 interface Product {
   id: number;
@@ -11,45 +10,43 @@ interface Product {
 
 @Component({
   selector: 'app-slide-demo-shoes',
-  imports: [SsgoiTransition],
+  host: {
+    class: 'block p-4 md:p-6',
+  },
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div ssgoiTransition="/slide/shoes" class="h-full bg-white">
-      <div class="p-4 md:p-6">
-        <div class="flex items-center justify-between mb-4">
-          <h2 class="text-xl md:text-2xl font-bold text-gray-900">Shoes</h2>
-          <span class="text-sm text-gray-500">{{ products.length }} items</span>
-        </div>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
-          @for (product of products; track product.id) {
-            <div
-              class="bg-white border border-gray-200 rounded-lg p-3 hover:shadow-lg transition-shadow relative"
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-xl md:text-2xl font-bold text-gray-900">Shoes</h2>
+      <span class="text-sm text-gray-500">{{ products.length }} items</span>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+      @for (product of products; track product.id) {
+        <div
+          class="bg-white border border-gray-200 rounded-lg p-3 hover:shadow-lg transition-shadow relative"
+        >
+          @if (product.tag) {
+            <span
+              class="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded"
             >
-              @if (product.tag) {
-                <span
-                  class="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded"
-                >
-                  {{ product.tag }}
-                </span>
-              }
-              <div
-                class="bg-green-50 rounded-lg h-24 md:h-32 flex items-center justify-center mb-3"
-              >
-                <span class="text-3xl md:text-4xl">{{ product.image }}</span>
-              </div>
-              <h3 class="font-medium text-sm text-gray-900 mb-1">
-                {{ product.name }}
-              </h3>
-              <p class="text-lg font-bold text-gray-900">{{ product.price }}</p>
-              <button
-                class="mt-2 w-full bg-green-600 text-white text-sm py-1.5 rounded hover:bg-green-700 transition-colors"
-              >
-                Add to Cart
-              </button>
-            </div>
+              {{ product.tag }}
+            </span>
           }
+          <div
+            class="bg-green-50 rounded-lg h-24 md:h-32 flex items-center justify-center mb-3"
+          >
+            <span class="text-3xl md:text-4xl">{{ product.image }}</span>
+          </div>
+          <h3 class="font-medium text-sm text-gray-900 mb-1">
+            {{ product.name }}
+          </h3>
+          <p class="text-lg font-bold text-gray-900">{{ product.price }}</p>
+          <button
+            class="mt-2 w-full bg-green-600 text-white text-sm py-1.5 rounded hover:bg-green-700 transition-colors"
+          >
+            Add to Cart
+          </button>
         </div>
-      </div>
+      }
     </div>
   `,
 })
