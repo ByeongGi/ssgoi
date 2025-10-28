@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { Ssgoi } from '@ssgoi/angular';
+import { Ssgoi, SsgoiTransition } from '@ssgoi/angular';
 import { blind } from '@ssgoi/angular/view-transitions';
 import { BrowserMockupComponent } from '../shared/browser-mockup.component';
 import {
@@ -11,6 +11,13 @@ import { BlindDemoAct1Component } from './blind-demo-act1.component';
 import { BlindDemoAct2Component } from './blind-demo-act2.component';
 import { BlindDemoFinaleComponent } from './blind-demo-finale.component';
 
+const BLIND_PATHS = {
+  theater: '/blind' as string,
+  act1: '/blind/act1' as string,
+  act2: '/blind/act2' as string,
+  finale: '/blind/finale' as string,
+} as const;
+
 // Main Blind Demo Component
 @Component({
   selector: 'app-blind-demo',
@@ -18,6 +25,7 @@ import { BlindDemoFinaleComponent } from './blind-demo-finale.component';
     BrowserMockupComponent,
     BlindLayoutComponent,
     Ssgoi,
+    SsgoiTransition,
     BlindDemoTheaterComponent,
     BlindDemoAct1Component,
     BlindDemoAct2Component,
@@ -38,17 +46,25 @@ import { BlindDemoFinaleComponent } from './blind-demo-finale.component';
       >
         @for (page of [currentPath()]; track page) {
           @switch (page) {
-            @case ('/blind') {
-              <app-blind-demo-theater />
+            @case (paths.theater) {
+              <div [ssgoiTransition]="paths.theater" class="h-full">
+                <app-blind-demo-theater />
+              </div>
             }
-            @case ('/blind/act1') {
-              <app-blind-demo-act1 />
+            @case (paths.act1) {
+              <div [ssgoiTransition]="paths.act1" class="h-full">
+                <app-blind-demo-act1 />
+              </div>
             }
-            @case ('/blind/act2') {
-              <app-blind-demo-act2 />
+            @case (paths.act2) {
+              <div [ssgoiTransition]="paths.act2" class="h-full">
+                <app-blind-demo-act2 />
+              </div>
             }
-            @case ('/blind/finale') {
-              <app-blind-demo-finale />
+            @case (paths.finale) {
+              <div [ssgoiTransition]="paths.finale" class="h-full">
+                <app-blind-demo-finale />
+              </div>
             }
           }
         }
@@ -57,12 +73,13 @@ import { BlindDemoFinaleComponent } from './blind-demo-finale.component';
   `,
 })
 export class BlindDemoComponent {
-  currentPath = signal('/blind');
+  readonly paths = BLIND_PATHS;
+  currentPath = signal(BLIND_PATHS.theater);
   readonly routes: BlindRoute[] = [
-    { path: '/blind', label: 'Opening' },
-    { path: '/blind/act1', label: 'Act I' },
-    { path: '/blind/act2', label: 'Act II' },
-    { path: '/blind/finale', label: 'Finale' },
+    { path: BLIND_PATHS.theater, label: 'Opening' },
+    { path: BLIND_PATHS.act1, label: 'Act I' },
+    { path: BLIND_PATHS.act2, label: 'Act II' },
+    { path: BLIND_PATHS.finale, label: 'Finale' },
   ];
   readonly ssgoiConfig = {
     defaultTransition: blind({

@@ -15,51 +15,44 @@ export interface BlindRoute {
   selector: 'app-blind-layout',
   imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    class: 'flex flex-col h-full',
+  },
   template: `
-    <div class="flex flex-col h-full">
-      <!-- Theater Header -->
-      <header class="bg-gray-900 border-b border-gray-700 flex-shrink-0">
-        <div class="max-w-6xl mx-auto px-3 md:px-4">
-          <div class="flex items-center justify-between h-14">
-            <div class="flex items-center gap-2 md:gap-4">
-              <h1
-                class="text-base md:text-xl font-bold text-white flex items-center gap-2"
-              >
-                <span class="text-xl md:text-2xl">{{ logo() }}</span>
-                <span class="hidden sm:inline">{{ title() }}</span>
-              </h1>
-              <nav class="flex items-center gap-1">
-                @for (route of routes(); track route.path) {
-                  <button
-                    (click)="onNavigate(route.path)"
-                    [class]="getButtonClass(route.path)"
-                  >
-                    {{ route.label }}
-                  </button>
-                }
-              </nav>
-            </div>
-            <div class="hidden md:flex items-center gap-4">
-              <span class="text-gray-400 text-sm">{{ headerText() }}</span>
-            </div>
+    <!-- Theater Header -->
+    <header class="bg-gray-900 border-b border-gray-700 flex-shrink-0">
+      <div class="max-w-6xl mx-auto px-3 md:px-4">
+        <div class="flex items-center justify-between h-14">
+          <div class="flex items-center gap-2 md:gap-4">
+            <h1
+              class="text-base md:text-xl font-bold text-white flex items-center gap-2"
+            >
+              <span class="text-xl md:text-2xl">{{ logo() }}</span>
+              <span class="hidden sm:inline">{{ title() }}</span>
+            </h1>
+            <nav class="flex items-center gap-1">
+              @for (route of routes(); track route.path) {
+                <button
+                  (click)="onNavigate(route.path)"
+                  [class]="getButtonClass(route.path)"
+                >
+                  {{ route.label }}
+                </button>
+              }
+            </nav>
+          </div>
+          <div class="hidden md:flex items-center gap-4">
+            <span class="text-gray-400 text-sm">{{ headerText() }}</span>
           </div>
         </div>
-      </header>
+      </div>
+    </header>
 
-      <!-- Main Content with Theater Theme -->
-      <main class="flex-1 overflow-auto relative z-0 bg-gray-900">
-        <ng-content />
-      </main>
-    </div>
+    <!-- Main Content with Theater Theme -->
+    <main class="flex-1 overflow-auto relative z-0 bg-gray-900">
+      <ng-content />
+    </main>
   `,
-  styles: [
-    `
-      :host {
-        display: block;
-        height: 100%;
-      }
-    `,
-  ],
 })
 export class BlindLayoutComponent {
   logo = input<string>('🎭');
