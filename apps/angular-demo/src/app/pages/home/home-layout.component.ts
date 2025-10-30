@@ -6,11 +6,7 @@ import { fade, hero, jaemin } from '@ssgoi/angular/view-transitions';
   selector: 'app-layout',
   imports: [RouterOutlet, Ssgoi],
   template: `
-    <div
-      ssgoi
-      [config]="ssgoiConfig"
-      class="black relative min-h-screen w-full"
-    >
+    <div ssgoi [config]="ssgoiConfig">
       <router-outlet />
     </div>
   `,
@@ -36,12 +32,12 @@ export class HomeLayoutComponent {
       {
         from: '/',
         to: '/jaemin',
-        transition: jaemin(),
+        transition: jaemin({ containerMode: 'positioned-parent' } as any),
       },
       {
         from: '/jaemin',
         to: '/',
-        transition: fade(),
+        transition: jaemin({ containerMode: 'positioned-parent' } as any),
       },
     ],
   };

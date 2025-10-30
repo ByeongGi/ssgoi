@@ -13,6 +13,9 @@ interface ColorItem {
 @Component({
   selector: 'app-home',
   imports: [RouterLink, SsgoiTransition, TransitionDirective],
+  host: {
+    class: 'black relative min-h-screen w-full',
+  },
   template: `
     <div ssgoiTransition="/">
       <div class="max-w-7xl mx-auto px-8 py-12">

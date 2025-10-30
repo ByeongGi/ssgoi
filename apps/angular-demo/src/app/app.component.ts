@@ -34,22 +34,6 @@ export class AppComponent {
       return { from, to };
     },
     transitions: [
-      // {
-      //   from: '/',
-      //   to: '/item/*',
-      //   transition: hero({ spring: { stiffness: 5, damping: 1 } }),
-      //   symmetric: true,
-      // },
-      // {
-      //   from: '/',
-      //   to: '/jaemin',
-      //   transition: jaemin(),
-      // },
-      // {
-      //   from: '/jaemin',
-      //   to: '/',
-      //   transition: fade(),
-      // },
       {
         from: '/',
         to: '/transitions/*',
